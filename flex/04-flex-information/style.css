@@ -24,3 +24,21 @@ img {
   justify-content: center;
   background: #eee;
 }
+
+
+/*my answer*/
+body {
+  text-align: center;
+}
+
+.allIntro {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 52px;
+}
+
+
+.intro {
+  max-width: 200px;
+}
