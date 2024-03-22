@@ -18,6 +18,7 @@
         }
         
         /*single round function: take two choices from computer and player(case-insensitive), compare it and return the result.*/
+        /*Return 1 when player win. return -1 when lose. return 0 when tie.*/
         function playRound(playerSelection, computerSelection) {
             playerSelection = standardSelection(playerSelection);
             computerSelection = standardSelection(computerSelection);
@@ -26,20 +27,25 @@
             let sum = playerNum + computerNum;
             
             if(playerNum === computerNum) {
-                return `Tie! Both are ${playerSelection}.`;
+                console.log(`Tie! Both are ${playerSelection}.`);
+                return 0;
             }
             if(playerNum > computerNum) {
                 if(sum === 0) {
-                    return `You Lose! ${computerSelection} beats ${playerSelection}`;
+                    console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
+                    return -1;
                 } else {
-                    return `You Win! ${playerSelection} beats ${computerSelection}`;
+                    console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
+                    return 1;
                 }
             }
             if(playerNum < computerNum) {
                 if(sum === 0) {
-                    return `You Win! ${playerSelection} beats ${computerSelection}`;
+                    console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
+                    return 1;
                 } else {
-                    return `You Lose! ${computerSelection} beats ${playerSelection}`;
+                    console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
+                    return -1;
                 }
             }
         }
@@ -75,8 +81,29 @@
         //5 input from user.
         //use console to display results of each round and winner at the end.
         function playGame() {
-
+            let playerScore = 0;
+            let computerScore = 0;
+            for(let i = 0; i < 5; i++) {
+                let playerSelection = prompt('input Rock, Scissors or Paper. No other symbols or space.');
+                playerSelection = standardSelection(playerSelection);
+                let computerSelection = getComputerChoice();
+                let result = playRound(playerSelection, computerSelection);
+                if(result > 0) {
+                    playerScore ++;
+                } else if (result < 0) {
+                    computerScore ++;
+                }
+            }
+            let scoreLog = `Your Score is ${playerScore}. Computer Score is ${computerScore}.`;
+            if(playerScore === computerScore) {
+                console.log('Tie! ${scoreLog}');
+            } else if (playerScore > computerScore) {
+                console.log(`You win! ${scoreLog}`);
+            } else {
+                console.log(`You Lose! ${scoreLog}`);
+            }
         }
+        playGame();
     </script>
 </head>
 <body>
