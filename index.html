@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+</head>
+<body>
+    <ul id="buttons" style="list-style-type: none; display: flex; justify-content: space-evenly;">
+        <li><button id="rock">Rock</button></li>
+        <li><button id="scissors">Scissors</button></li>
+        <li><button id="paper">Paper</button></li>
+    </ul>
+    <div id="display" style="border: 1px solid black; text-align: center;">
+        <p id="result">New Game</p>
+        <p id="score"></p>
+    </div>
     <script>
         /*computer choose randomly among Rock, Paper, Scissor and return the string.*/
         function getComputerChoice() {
@@ -17,54 +28,46 @@
             }
         }
         
-        /*single round function: take two choices from computer and player(case-insensitive), compare it and return the result.*/
+        let displayResultsArea = document.querySelector("#result");
         /*Return 1 when player win. return -1 when lose. return 0 when tie.*/
-        function playRound(playerSelection, computerSelection) {
-            playerSelection = standardSelection(playerSelection);
-            computerSelection = standardSelection(computerSelection);
+        function playRound(playerSelection) {
+            let computerSelection = getComputerChoice();
             let playerNum = numberRepresentation(playerSelection);
             let computerNum = numberRepresentation(computerSelection);
             let sum = playerNum + computerNum;
             
             if(playerNum === computerNum) {
-                console.log(`Tie! Both are ${playerSelection}.`);
+                displayResultsArea.textContent =`Tie! Both are ${playerSelection}`;
                 return 0;
             }
             if(playerNum > computerNum) {
                 if(sum === 0) {
-                    console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
+                    displayResultsArea.textContent =`You Lose! ${computerSelection} beats ${playerSelection}`;
                     return -1;
                 } else {
-                    console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
+                    displayResultsArea.textContent = `You Win! ${playerSelection} beats ${computerSelection}`;
                     return 1;
                 }
             }
             if(playerNum < computerNum) {
                 if(sum === 0) {
-                    console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
+                    displayResultsArea.textContent = `You Win! ${playerSelection} beats ${computerSelection}`;
                     return 1;
                 } else {
-                    console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
+                    displayResultsArea.textContent = `You Lose! ${computerSelection} beats ${playerSelection}`;
                     return -1;
                 }
             }
         }
-        /*
-        Test output in console:
-        const playerSelection = "rock";
-        const computerSelection = getComputerChoice();
-        console.log(`p: ${playerSelection}; c: ${computerSelection}`);
-        console.log(playRound(playerSelection, computerSelection));
-        */
         
-
+    
         /*Upper first letter and lower remain letter.*/
         function standardSelection(selection) {
             let firstLetter = selection.charAt(0).toUpperCase();
             let remainLetter = selection.substr(1).toLowerCase();
             return firstLetter+remainLetter;
         }
-
+    
         /*use 1 0 -1 to reprents Rock, Scissors, paper.*/
         function numberRepresentation(standardSelection) {
             if (standardSelection === 'Rock') {
@@ -75,7 +78,7 @@
                 return -1;
             } 
         }
-
+    
         /*playGame()*/
         //5 round.
         //5 input from user.
@@ -83,30 +86,33 @@
         function playGame() {
             let playerScore = 0;
             let computerScore = 0;
-            for(let i = 0; i < 5; i++) {
-                let playerSelection = prompt('input Rock, Scissors or Paper. No other symbols or space.');
-                playerSelection = standardSelection(playerSelection);
-                let computerSelection = getComputerChoice();
-                let result = playRound(playerSelection, computerSelection);
+            let rockButton = document.querySelector("#rock");
+            let scissorsButton = document.querySelector("#scissors");
+            let paperButton = document.querySelector("#paper");
+            let buttons = document.querySelector("#buttons");
+            
+            buttons.addEventListener('click', (event)=> {
+                let target = event.target;
+                console.log(target.textContent);
+                let result = playRound(target.textContent);
                 if(result > 0) {
                     playerScore ++;
                 } else if (result < 0) {
                     computerScore ++;
+                };
+                let scoreLog = `Your Score is ${playerScore}. Computer Score is ${computerScore}.`;
+                let scoreArea = document.querySelector("#score");
+                scoreArea.textContent = scoreLog;
+
+                if(playerScore===5) {
+                    displayResultsArea.textContent = `Game Winner: You!`;
+                } else if(computerScore ===5){
+                    displayResultsArea.textContent = `Game Winner: Comupter!`;
                 }
-            }
-            let scoreLog = `Your Score is ${playerScore}. Computer Score is ${computerScore}.`;
-            if(playerScore === computerScore) {
-                console.log('Tie! ${scoreLog}');
-            } else if (playerScore > computerScore) {
-                console.log(`You win! ${scoreLog}`);
-            } else {
-                console.log(`You Lose! ${scoreLog}`);
-            }
+            });
         }
         playGame();
     </script>
-</head>
-<body>
-    
 </body>
+
 </html>
