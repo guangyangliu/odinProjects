@@ -15,18 +15,7 @@ const multiply = function(array) {
 };
 
 const power = function(base, power) {
-if(base === 0) {
-  return 0;
-}
-if(power === 0) {
-  return 1;
-}
-let product = 1;
-while (power>0) {
-  product *= base;
-  power--;
-}  
-return product; 
+  return Math.pow(base, power);
 };
 
 const factorial = function(num) {
