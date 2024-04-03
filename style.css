@@ -1,6 +1,6 @@
 button {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
 }
 
 #buttons {
@@ -14,9 +14,20 @@ button {
 #buttons div {
     display: flex;
     flex: 1;
+    border: 1px solid black;
 }
 
 
+body {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    flex: auto;
+}
 #display {
-    text-align: center;
+    width: 160px;
+    text-align:right;
+    font-size: 20px;
+    padding: 10px 0;
+    border: 1px solid black;
 }
