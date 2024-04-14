@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="cover">
+    <div class="coverContainer">
         <img class="img" src="halie-west-25xggax4bSA-unsplash.jpg">
         <div class="logoContainer">
             <img class="logo" src="odin-lined.png">
-            <p class="copy">ODIN</p>
+            <span>ODIN</span>
         </div>
     </div>
+    
     
     <form>
         <section class="intro">
@@ -70,34 +71,33 @@
             <p>Already have an account?<a href="" style="color: #596D48; text-decoration: none; font-weight: bold;">Log in</a></p>
         </section>
     </form>
-
-    <script>
-        let password = document.querySelector("#password");
-        let confirmPassword = document.querySelector("#confirmPassword");
-        let errorMessage = document.querySelector(".error");
-        
-        function matachPassword() {
-            if(password.value === "" || password.value !== confirmPassword.value) {
-                errorMessage.textContent = "*Passwords do not match.";
-                password.style.borderColor = "red";
-                confirmPassword.style.borderColor = "red";
-            } else {
-                errorMessage.textContent = "";
-                password.style.borderColor = "blue";
-                confirmPassword.style.borderColor = "blue";
-            }
-        }
-        matachPassword();
-
-        password.addEventListener('keyup', e=>{
-            matachPassword();
-        });
-
-        confirmPassword.addEventListener('keyup', e=>{
-            matachPassword();
-        });
-        
-
-    </script>
+    
 </body>
+<script>
+    let password = document.querySelector("#password");
+    let confirmPassword = document.querySelector("#confirmPassword");
+    let errorMessage = document.querySelector(".error");
+    
+    function matachPassword() {
+        if(password.value === "" || password.value !== confirmPassword.value) {
+            errorMessage.textContent = "*Passwords do not match.";
+            password.style.borderColor = "red";
+            confirmPassword.style.borderColor = "red";
+        } else {
+            errorMessage.textContent = "";
+            password.style.borderColor = "blue";
+            confirmPassword.style.borderColor = "blue";
+        }
+    }
+    matachPassword();
+
+    password.addEventListener('keyup', e=>{
+        matachPassword();
+    });
+
+    confirmPassword.addEventListener('keyup', e=>{
+        matachPassword();
+    });
+
+</script>
 </html>
