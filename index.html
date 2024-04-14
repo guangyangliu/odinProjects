@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cover">
+        <img class="img" src="halie-west-25xggax4bSA-unsplash.jpg">
+        <div class="logoContainer">
+            <img class="logo" src="odin-lined.png">
+            <p class="copy">ODIN</p>
+        </div>
+    </div>
+    
+    <form>
+        <section class="intro">
+            <p>This is not a real online service! You know you need something like this in your life to help you realize your deepest dreams.
+                Sign up now to get started.
+            </p>
+            <em>You know you want to.</em>
+        </section>
+
+        
+        <section class="formItems">
+            <h3>Let's do this!</h3>
+            <div class="row">
+            <div>
+                <label for="firstName">FIRST NAME</label>
+                <input type="text" id="firstName" name="firstName">
+            </div>
+            
+            <div>
+                <label for="lastName">LAST NAME</label>
+                <input type="text" id="lastName" name="lastName">
+            </div>
+            </div>
+
+            <div class="row">
+            <div>
+                <label for="email">EMAIL</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div>
+                <label for="phoneNumber">PHONE NUMBER</label>
+                <input type="phoneNumber" id="phoneNumber" name="phoneNumber">
+            </div>
+            </div>
+            <div class="row">
+            <div>
+                <label for="password">PASSWORD</label>
+                <input type="password" id="password" name="password" required>
+                <p class="error"></p>
+            </div>
+
+            <div>
+                <label for="confirmPassword">CONFIRM PASSWORD</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+            </div>
+        </section>
+
+
+
+        <section class="button">
+            <button type="submit">Create Account</button>
+            <p>Already have an account?<a href="" style="color: #596D48; text-decoration: none; font-weight: bold;">Log in</a></p>
+        </section>
+    </form>
+
+    <script>
+        let password = document.querySelector("#password");
+        let confirmPassword = document.querySelector("#confirmPassword");
+        let errorMessage = document.querySelector(".error");
+        
+        function matachPassword() {
+            if(password.value === "" || password.value !== confirmPassword.value) {
+                errorMessage.textContent = "*Passwords do not match.";
+                password.style.borderColor = "red";
+                confirmPassword.style.borderColor = "red";
+            } else {
+                errorMessage.textContent = "";
+                password.style.borderColor = "blue";
+                confirmPassword.style.borderColor = "blue";
+            }
+        }
+        matachPassword();
+
+        password.addEventListener('keyup', e=>{
+            matachPassword();
+        });
+
+        confirmPassword.addEventListener('keyup', e=>{
+            matachPassword();
+        });
+        
+
+    </script>
+</body>
+</html>
