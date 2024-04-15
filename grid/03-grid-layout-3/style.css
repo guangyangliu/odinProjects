@@ -100,8 +100,12 @@
 .header {
   grid-column: 1 / span 2;
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 1fr 2fr;
   align-items: center;
+}
+
+.logo {
+  justify-self: start;
 }
 
 .menu ul {
