@@ -1,0 +1,68 @@
+/*basic layout*/
+body {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr 4fr;
+}
+
+
+/*sidebar layout*/
+
+.sidebar {
+    grid-row: 1/-1;
+    background-color: rgb(69, 144, 206);
+    color: white;
+    font-weight: bolder;
+    display: grid;
+    grid-template-rows: 3% 15% 9%;
+    gap: 2%;
+    padding-top: 10%;
+}
+
+.sidebarChoice {
+    display: grid;
+    grid-template-rows: repeat(5,1fr);
+}
+
+.sidebarSettings {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+}
+
+
+.dashboard, .sidebarChoice div, .sidebarSettings div {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    align-items: center;
+    gap: 10px;
+}
+
+svg {
+    fill: white;
+    height: 60%;
+    width: 60%;
+    justify-self: end;
+}
+
+.dashboard svg {
+    height: 100%;
+    width: auto;
+}
+.dashboard {
+    font-size: 1.5rem;
+}
+
+
+/*header layout*/
+
+.header {
+    background-color: lightblue;
+    display: grid;
+    grid-template-columns: 2fr / 1fr;
+    grid-template-rows: 1fr / 1fr;
+}
+
+
+.mainContentContainer {
+    background-color: rgb(227, 232, 229);
+}
