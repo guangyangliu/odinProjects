@@ -1,0 +1,18 @@
+ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: start;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse; /* Ensure cells share borders */
+  }
+  
+  td,th {
+    border: 1px solid black; /* Add border around each cell */
+  }
+  
+
