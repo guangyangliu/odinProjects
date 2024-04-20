@@ -1,3 +1,40 @@
-td {
-    border: 1px solid black;
+#cellGird {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
 }
+
+#cellGird div {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#start {
+    display: grid;
+    justify-content: center;
+}
+
+input, button {
+    width: 100px;
+    justify-self: center;
+    border-radius: 1;
+}
+button {
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+body {
+    background-color: rgb(88, 176, 172);
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    padding-top: 10%;
+}
+
+#board {
+    font-size: 3rem;
+}
+

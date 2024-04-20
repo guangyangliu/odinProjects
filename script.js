@@ -1,14 +1,72 @@
+let body = document.querySelector("body");
+let gameContainer = document.getElementById("gameContainer");
+let button = document.getElementById("newGame");
+let gameOver = false;
+
+
 function gameBoard (row, col) {
-    let board = [];
+    let board = document.createElement("div");
+    board.id = "board";
+    let info = document.createElement("div");
+    info.id = "gameInfo";
+    let cellGird = document.createElement("div");
+    cellGird.id = "cellGird";
+    gameContainer.appendChild(board);
+    board.appendChild(info);
+    board.appendChild(cellGird);
+
+    
     for (let i = 0; i < row; i++) {
-        board[i] = [];
         for (let j = 0; j < col; j++) {
-            board[i][j] = "";
+            let cell = document.createElement("div");
+            cell.id = `cell${i}${j}`;
+            cellGird.appendChild(cell);
         }
         
     }
-    return board;
+    return {board, info, cellGird};
 }
+
+function start() {
+    
+    gameContainer.remove();
+    gameContainer = document.createElement("div");
+    body.insertBefore(gameContainer, button);
+
+    
+    let startContainer = document.createElement("form");
+    startContainer.id = "start";
+
+    let playerOneLabel = document.createElement("label");
+    playerOneLabel.textContent = "PlayerOne Name";
+    let playerOneInput = document.createElement("input");
+    playerOneInput.id = "playerOne";
+
+    let playerTwoLabel = document.createElement("label");
+    playerTwoLabel.textContent = "PlayerTwo Name";
+    let playerTwoInput = document.createElement("input");
+    playerTwoInput.id = "playerTwo";
+
+    gameContainer.appendChild(startContainer);
+    startContainer.appendChild(playerOneLabel);
+    startContainer.appendChild(playerOneInput);
+    startContainer.appendChild(playerTwoLabel);
+    startContainer.appendChild(playerTwoInput);
+
+    button.addEventListener("click", ()=>{
+        let board = document.getElementById("board");
+        if(gameOver) {
+            playerOneInput = "";
+            playerTwoInput = "";
+            start();
+            gameOver = false;
+        } else if(playerOneInput.value && playerTwoInput.value && !board) {
+            game(playerOneInput,playerTwoInput);
+            startContainer.remove();
+        }
+    })
+}
+
     function winner(board) {
         //check row;
         for (let row = 0; row < 3; row++) {
@@ -43,40 +101,48 @@ function gameBoard (row, col) {
     }
     
 
-function Player(content) {
+
+function Player(name, content) {
     let token = 0;
     const addToken = () => token++;
     const getToken = () => token;
-    return {content, getToken, addToken};
+    return {name, content, getToken, addToken};
 }
 
-function game() {
+function game(playerOneInput, playerTwoInput) {
     const row = 3;
     const col = 3;
-    let playerX = Player("X");
-    let playerO = Player("O");
     let board = gameBoard(row, col);
-    let gameInfo = document.querySelector(".gameInfo");
+    
+    let gameInfo = document.getElementById("gameInfo");
     let finalWinner;
-    let currentPlayer = playerX;
-    gameInfo.textContent = `${currentPlayer.content} turn`
+    let playerOne = Player(playerOneInput.value, "X");
+    let playerTwo = Player(playerTwoInput.value, "O");
+    let currentPlayer = playerOne;
+    gameInfo.textContent = `${currentPlayer.name} turn`
 
     function isFull() {
-        let totalToken = playerX.getToken() + playerO.getToken();
+        let totalToken = playerOne.getToken() + playerTwo.getToken();
         return totalToken >= 9;
     }
 
     function drawCell(cell) {
+        if(gameOver) {
+            return;
+        }
         if (!cell.textContent) {
             cell.textContent = currentPlayer.content;
             currentPlayer.addToken();
-            currentPlayer =  playerX.getToken() > playerO.getToken() ? playerO : playerX;
-            gameInfo.textContent = `${currentPlayer.content} turn`
+            currentPlayer =  playerOne.getToken() > playerTwo.getToken() ? playerTwo : playerOne;
+            gameInfo.textContent = `${currentPlayer.name} turn`
             finalWinner = winner(board);
             if(finalWinner) {
-                gameInfo.textContent = `${"The Winner: "}${finalWinner}`;
+                let winnerName = finalWinner === playerOne.content ? playerOne.name : playerTwo.name;
+                gameInfo.textContent = `${"The Winner: "}${winnerName}`;
+                gameOver = true;
             } else if (isFull()) {
                 gameInfo.textContent = "Tie";
+                gameOver = true;
             }
     }
     }
@@ -90,7 +156,10 @@ function game() {
             
         }
     }
+
     
 }
 
-game();
+
+
+start();
