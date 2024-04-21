@@ -1,8 +1,6 @@
 let body = document.querySelector("body");
 let gameContainer = document.getElementById("gameContainer");
 let button = document.getElementById("newGame");
-let gameOver = false;
-
 
 function gameBoard (row, col) {
     let board = document.createElement("div");
@@ -22,18 +20,17 @@ function gameBoard (row, col) {
             cell.id = `cell${i}${j}`;
             cellGird.appendChild(cell);
         }
-        
     }
     return {board, info, cellGird};
 }
 
-function start() {
-    
+function resetGame() {
     gameContainer.remove();
     gameContainer = document.createElement("div");
     body.insertBefore(gameContainer, button);
+}
 
-    
+function start() {
     let startContainer = document.createElement("form");
     startContainer.id = "start";
 
@@ -53,18 +50,22 @@ function start() {
     startContainer.appendChild(playerTwoLabel);
     startContainer.appendChild(playerTwoInput);
 
+    
     button.addEventListener("click", ()=>{
         let board = document.getElementById("board");
-        if(gameOver) {
-            playerOneInput = "";
-            playerTwoInput = "";
+        
+        if(board) {
+            resetGame();
             start();
-            gameOver = false;
-        } else if(playerOneInput.value && playerTwoInput.value && !board) {
-            game(playerOneInput,playerTwoInput);
-            startContainer.remove();
+        }else {
+            if(playerOneInput.value && playerTwoInput.value) {
+                resetGame();
+                game(playerOneInput,playerTwoInput);
+            }
+
         }
     })
+    
 }
 
     function winner(board) {
@@ -120,6 +121,7 @@ function game(playerOneInput, playerTwoInput) {
     let playerTwo = Player(playerTwoInput.value, "O");
     let currentPlayer = playerOne;
     gameInfo.textContent = `${currentPlayer.name} turn`
+    let gameOver = false;
 
     function isFull() {
         let totalToken = playerOne.getToken() + playerTwo.getToken();
@@ -132,17 +134,22 @@ function game(playerOneInput, playerTwoInput) {
         }
         if (!cell.textContent) {
             cell.textContent = currentPlayer.content;
+            if(cell.textContent === "O") {
+                cell.style = "color: white";
+            }
             currentPlayer.addToken();
             currentPlayer =  playerOne.getToken() > playerTwo.getToken() ? playerTwo : playerOne;
             gameInfo.textContent = `${currentPlayer.name} turn`
             finalWinner = winner(board);
             if(finalWinner) {
                 let winnerName = finalWinner === playerOne.content ? playerOne.name : playerTwo.name;
-                gameInfo.textContent = `${"The Winner: "}${winnerName}`;
+                gameInfo.textContent = `${"Winner: "}${winnerName}`;
                 gameOver = true;
+                return;
             } else if (isFull()) {
                 gameInfo.textContent = "Tie";
                 gameOver = true;
+                return;
             }
     }
     }
