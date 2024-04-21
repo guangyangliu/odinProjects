@@ -2,6 +2,23 @@ let body = document.querySelector("body");
 let gameContainer = document.getElementById("gameContainer");
 let button = document.getElementById("newGame");
 
+button.addEventListener("click", ()=>{
+    let board = document.getElementById("board");
+    let playerOneInput = document.getElementById("playerOne");
+    let playerTwoInput = document.getElementById("playerTwo");
+    console.log(board);
+    if(board) {
+        resetGame();
+        start();
+    }else {
+        if(playerOneInput.value !== "" && playerTwoInput.value !== "") {
+            console.log(playerOneInput.value);
+            resetGame();
+            game(playerOneInput,playerTwoInput);
+        }
+    }
+})
+
 function gameBoard (row, col) {
     let board = document.createElement("div");
     board.id = "board";
@@ -49,22 +66,6 @@ function start() {
     startContainer.appendChild(playerOneInput);
     startContainer.appendChild(playerTwoLabel);
     startContainer.appendChild(playerTwoInput);
-
-    
-    button.addEventListener("click", ()=>{
-        let board = document.getElementById("board");
-        
-        if(board) {
-            resetGame();
-            start();
-        }else {
-            if(playerOneInput.value && playerTwoInput.value) {
-                resetGame();
-                game(playerOneInput,playerTwoInput);
-            }
-
-        }
-    })
     
 }
 
