@@ -1,4 +1,5 @@
 import { inOrderCall, preOrderCall, postOrderCall, levelCall } from "./traversal";
+import { nodeHeight, nodeDepth } from "./heightAndDepth";
 
 export function Node(data, left = null, right = null) {
     return {data, left, right};
@@ -31,7 +32,19 @@ function Tree(array) {
     function postOrder(callback) {
         return postOrderCall(root, callback);
     }
-    return {root, insert, deleteItem, find, levelOrder, inOrder, preOrder, postOrder};
+    function height(node) {
+        return nodeHeight(node);
+    }
+    function depth(node) {
+        return nodeDepth(root, node);
+    }
+    function isBalanced() {
+
+    }
+    function rebalance() {
+
+    }
+    return {root, insert, deleteItem, find, levelOrder, inOrder, preOrder, postOrder, height, depth, isBalanced, rebalance};
 }
 
 function insertValueInTree(value, root) {
@@ -143,7 +156,8 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     }
   };
 
-  tree.insert(25)
+  tree.insert(9999)
+  console.log(tree.height(tree.root));
   prettyPrint(tree.root);
   tree.deleteItem(8);
   prettyPrint(tree.root);
@@ -154,3 +168,6 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   console.log(tree.inOrder(mutiplyOne));
   console.log(tree.preOrder(mutiplyOne));
   console.log(tree.postOrder(mutiplyOne));
+
+  let node = Node(1);
+  console.log(tree.depth(node));
