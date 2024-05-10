@@ -1,11 +1,11 @@
 import { inOrderCall, preOrderCall, postOrderCall, levelCall } from "./traversal";
-import { nodeHeight, nodeDepth } from "./heightAndDepth";
+import { nodeDepth, longestPath, shortestPath } from "./heightAndDepth";
 
 export function Node(data, left = null, right = null) {
     return {data, left, right};
 }
 
-function Tree(array) {
+export function Tree(array) {
     let root = buildTree(array);
     function insert(value) {
         root = insertValueInTree(value, root);
@@ -33,18 +33,24 @@ function Tree(array) {
         return postOrderCall(root, callback);
     }
     function height(node) {
-        return nodeHeight(node);
+        return longestPath(node);
     }
     function depth(node) {
         return nodeDepth(root, node);
     }
     function isBalanced() {
-
+        let diff = longestPath(root) - shortestPath(root);
+        return diff <= 1;
     }
     function rebalance() {
-
+        let callback = (data) => {return data};
+        let treeArray = inOrder(callback);
+        root = buildTree(treeArray);
     }
-    return {root, insert, deleteItem, find, levelOrder, inOrder, preOrder, postOrder, height, depth, isBalanced, rebalance};
+    function getRoot() {
+        return root;
+    }
+    return {getRoot, insert, deleteItem, find, levelOrder, inOrder, preOrder, postOrder, height, depth, isBalanced, rebalance};
 }
 
 function insertValueInTree(value, root) {
@@ -143,6 +149,7 @@ let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let tree = Tree(array);
 
 
+/*
 const prettyPrint = (node, prefix = "", isLeft = true) => {
     if (node === null) {
       return;
@@ -157,17 +164,26 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   };
 
   tree.insert(9999)
-  console.log(tree.height(tree.root));
-  prettyPrint(tree.root);
+  console.log(tree.height(tree.getRoot()));
+  prettyPrint(tree.getRoot());
+
+
   tree.deleteItem(8);
-  prettyPrint(tree.root);
+  prettyPrint(tree.getRoot());
 
   const mutiplyOne = (arg) => {return arg *1};
   console.log(tree.levelOrder(mutiplyOne));
-
   console.log(tree.inOrder(mutiplyOne));
   console.log(tree.preOrder(mutiplyOne));
   console.log(tree.postOrder(mutiplyOne));
 
   let node = Node(1);
   console.log(tree.depth(node));
+
+  prettyPrint(tree.getRoot());
+  console.log(tree.isBalanced());
+  
+  tree.rebalance();
+  prettyPrint(tree.getRoot());
+  console.log(tree.isBalanced());
+  */
