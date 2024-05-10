@@ -7,7 +7,13 @@ function Tree(array) {
     function insert(value) {
         root = insertValueInTree(value, root);
     }
-    return {root, insert};
+    function deleteItem(value) {
+        root = deletNode(value, root);
+    }
+    function find(value) {
+        return findNode(value, root);
+    }
+    return {root, insert, deleteItem, find};
 }
 
 function insertValueInTree(value, root) {
@@ -15,15 +21,65 @@ function insertValueInTree(value, root) {
         return root = Node(value);
     }
 
-    if (value === root.data) {
+    if (value < root.data) {
+        root.left = insertValueInTree(value, root.left);
+    }
+    
+    if (value > root.data) {
+        root.right = insertValueInTree(value, root.right);
+    }
+    return root;
+}
+
+function deletNode(value, root) {
+    if (root === null) {
         return root;
+    }
+    if (value < root.data) {
+        root.left = deletNode(value, root.left);
+    }
+
+    if (value > root.data) {
+        root.right = deletNode(value, root.right);
+    }
+
+    if (value === root.data) {
+        if (root.left === null) {
+            return root.right;
+        }
+        if (root.right === null) {
+            return root.left;
+        }
+
+        root.data = minValue(root.right);
+        
+        root.right = deletNode(root.data, root.right);
+    }
+    return root;
+}
+
+function minValue(node) {
+    let minv = node.data;
+    while (node.left !== null) {
+        minv = node.left.data;
+        node = node.left;
+    }
+    return minv;
+}
+
+function findNode(value, root) {
+    if(root === null) {
+        return null;
     }
 
     if (value < root.data) {
-        root.left = insertValueInTree(value, root.left);
-    } else {
-        root.right = insertValueInTree(value, root.right);
+        return findNode(value, root.left);
     }
+
+    if (value > root.data) {
+        return findNode(value, root.right);
+    }
+
     return root;
 }
 
@@ -69,5 +125,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     }
   };
 
-  tree.insert(999)
+  tree.insert(25)
+  prettyPrint(tree.root);
+  tree.deleteItem(8);
   prettyPrint(tree.root);
