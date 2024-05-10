@@ -1,4 +1,4 @@
-import { levelCall } from "./levelCall";
+import { inOrderCall, preOrderCall, postOrderCall, levelCall } from "./traversal";
 
 export function Node(data, left = null, right = null) {
     return {data, left, right};
@@ -19,7 +19,19 @@ function Tree(array) {
     function levelOrder(callback) {
         return levelCall(root, callback);
     }
-    return {root, insert, deleteItem, find, levelOrder};
+
+    function inOrder(callback) {
+        return inOrderCall(root, callback);
+
+    }
+    function preOrder(callback) {
+        return preOrderCall(root, callback);
+    
+    }
+    function postOrder(callback) {
+        return postOrderCall(root, callback);
+    }
+    return {root, insert, deleteItem, find, levelOrder, inOrder, preOrder, postOrder};
 }
 
 function insertValueInTree(value, root) {
@@ -137,5 +149,8 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   prettyPrint(tree.root);
 
   const mutiplyOne = (arg) => {return arg *1};
-  let arr = tree.levelOrder(mutiplyOne);
-  console.log(arr);
+  console.log(tree.levelOrder(mutiplyOne));
+
+  console.log(tree.inOrder(mutiplyOne));
+  console.log(tree.preOrder(mutiplyOne));
+  console.log(tree.postOrder(mutiplyOne));
