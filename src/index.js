@@ -1,4 +1,6 @@
-function Node(data, left = null, right = null) {
+import { levelCall } from "./levelCall";
+
+export function Node(data, left = null, right = null) {
     return {data, left, right};
 }
 
@@ -13,7 +15,11 @@ function Tree(array) {
     function find(value) {
         return findNode(value, root);
     }
-    return {root, insert, deleteItem, find};
+
+    function levelOrder(callback) {
+        return levelCall(root, callback);
+    }
+    return {root, insert, deleteItem, find, levelOrder};
 }
 
 function insertValueInTree(value, root) {
@@ -129,3 +135,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   prettyPrint(tree.root);
   tree.deleteItem(8);
   prettyPrint(tree.root);
+
+  const mutiplyOne = (arg) => {return arg *1};
+  let arr = tree.levelOrder(mutiplyOne);
+  console.log(arr);
