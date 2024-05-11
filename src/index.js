@@ -1,28 +1,25 @@
 const _ = require('lodash');
 
-function board() {
-    let graph = [];
-    for (let i = 0; i <= 7; i++) {
-        graph[i] = [];
-        for (let j = 0; j <= 7; j++) {
-            graph[i].push(j);
-        }
+
+
+function knightMoves(start, end) {
+    let shortestPath = knightMoveShortestPath(start, end);
+    let string = `You made it in ${shortestPath.length - 1} moves!  Here's your path:`
+    for (let move of shortestPath) {
+        string += `\n[${move}]`
     }
-    return graph;
+    console.log(string);
 }
 
-board();
 
-
-function knightMoves(start, end, visited = []) {
+function knightMoveShortestPath(start, end, visited = []) {
     if (_.isEqual(start, end)) {
         return [start];
     }
     visited.push(start);
-    let moves = basicMove(start);
-    moves = moves.filter(move=>!isContain(visited, move));
+    let moves = basicMove(start, visited);
 
-    if(!moves[0]) {
+    if(moves.length < 1) {
         return null;
     }
     
@@ -30,7 +27,7 @@ function knightMoves(start, end, visited = []) {
     let shortestPath;
     for (let move of moves) {
         let path = [];
-        path = knightMoves(move, end, visited);
+        path = knightMoveShortestPath(move, end, visited);
 
         if(path) {
             path.unshift(start);
@@ -45,16 +42,7 @@ function knightMoves(start, end, visited = []) {
 }
 
 
-function isContain(visited, square) {
-    for (let v of visited) {
-        if (_.isEqual(v, square)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-function basicMove(start) {
+function basicMove(start, visited) {
     let i = start[0];
     let j = start[1];
     let basicMoves = [];
@@ -68,15 +56,29 @@ function basicMove(start) {
     basicMoves.push([i-1, j+2]);
     basicMoves.push([i-1, j-2]);
 
-    basicMoves = basicMoves.filter(square => square[0]>=0 && square[0]<=7 && square[1]>=0 && square[1]<=7);
-    return basicMoves.length >= 1? basicMoves : null;
+    function isContain(visited, square) {
+        for (let v of visited) {
+            if (_.isEqual(v, square)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function isInbound(square) {
+        let i = square[0];
+        let j = square[1];
+        return i >= 0 && i <=7 && j >=0 && j <=7;
+    }
+
+    return basicMoves.filter(square => isInbound(square) && !isContain(visited, square));
 }
 
-console.log(basicMove([0,0]));
 
-console.log(knightMoves([0,0],[3,3]));
-console.log(knightMoves([3,3],[0,0]));
-console.log(knightMoves([0,0],[7,7]));
+knightMoves([0,0],[3,3]);
+knightMoves([3,3],[0,0]);
+knightMoves([0,0],[7,7]);
+knightMoves([3,3],[4,3]);
 
 
 /*
