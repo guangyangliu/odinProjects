@@ -1,0 +1,23 @@
+body {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    height: 100vh;
+}
+
+#nav {
+    display: flex;
+    flex-direction: column;
+}
+
+div {
+    border: 1px solid black;
+}
+
+button {
+    color: black;
+}
+
+.todo {
+    display: flex;
+    flex-direction: column;
+}
