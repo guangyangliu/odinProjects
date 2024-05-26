@@ -7,10 +7,18 @@
 </head>
 <body>
     <div id="nav">
-        <button id="add">Add Todo</button>
-        <div id="allTodos"> All Todos</div>
-        <div id="project">My projects</div>
+        <button id="addTodo">Add Todo</button>
+        <div id="allTodos" class="projectItem"> All Todos</div>
+
+        <div id="projects">
+            <div id="projectsNav">
+            <p>My projects:</p>
+            <button id="addProject">+</button>
+            </div>
+            <ul id="projectLists"></ul>
+        </div>
     </div>
+
     <div id="content"></div>
     <script src="main.js"></script>
 </body>

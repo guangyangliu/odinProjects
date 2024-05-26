@@ -17,7 +17,23 @@ button {
     color: black;
 }
 
-.todo {
+form {
     display: flex;
     flex-direction: column;
+    width: 500px;
+    height: 500px;
+    position:sticky;
+    margin: 50px auto;
 }
+
+
+#projectsNav {
+    display: flex;
+    justify-content: space-between;
+}
+
+ul {
+    list-style: none;
+}
+
+
