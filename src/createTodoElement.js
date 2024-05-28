@@ -1,9 +1,11 @@
 const { createElement } = require("./createElement");
+const _ = require('lodash');
+
 import 'date-fns/locale';
 import { format } from 'date-fns';
 import { el, zhCN } from 'date-fns/locale';
 import {  currentProjectId } from ".";
-import { createTodo } from './createTodoData';
+import { createTodo, deleteTodo } from './createTodoData';
 
 
 
@@ -17,7 +19,7 @@ export function addTodoEventListener() {
 
 
 
-function createForm(formContainer, titleValue = '', descriptionValue = '', dueDateValue = '', priorityValue = '') {
+function createForm(formContainer, todo = {project : '', title : '', description : '', dueDate : '', priority : '', time : ''}) {
     if (document.querySelector('form')) {
         return;
     }
@@ -27,20 +29,20 @@ function createForm(formContainer, titleValue = '', descriptionValue = '', dueDa
     title.placeholder = 'Assignment name';
     title.name = 'title';
     title.required = true;
-    title.value = titleValue;
+    title.value = todo.title;
 
     let description = createElement(todoForm, 'input');
     description.type = 'text';
     description.placeholder = 'Description'
     description.name = 'description';
     description.required = true;
-    description.value = descriptionValue;
+    description.value = todo.description;
 
     let dueDate = createElement(todoForm, 'input');
     dueDate.type = 'date';
     dueDate.name = 'dueDate';
     dueDate.required = true;
-    dueDate.value = dueDateValue;
+    dueDate.value = todo.dueDate;
 
 
     let priority = createElement(todoForm, 'select');
@@ -51,7 +53,7 @@ function createForm(formContainer, titleValue = '', descriptionValue = '', dueDa
     createElement(priority, 'option').textContent = 'p3';
     createElement(priority, 'option').textContent = 'p4';
     priority.required = true;
-    priority.value = priorityValue;
+    priority.value = todo.priority;
 
 
     let submit = createElement(todoForm, 'input');
@@ -59,10 +61,13 @@ function createForm(formContainer, titleValue = '', descriptionValue = '', dueDa
     submit.value = 'Submit';
 
     todoForm.addEventListener('submit', (event)=>{
+        if (!_.isEqual(todo, {project : '', title : '', description : '', dueDate : '', priority : '', time : ''})) {
+            deleteTodo(todo);
+        }
         storeForm(event);
         todoForm.remove();
         showTodo();
-        return true;
+        
     });
     
     let cancle = createElement(todoForm, 'button');
@@ -70,7 +75,7 @@ function createForm(formContainer, titleValue = '', descriptionValue = '', dueDa
     cancle.id = 'cancle';
     cancle.addEventListener('click', ()=>{
         todoForm.remove();
-        return false;
+        showTodo();
     })
 }
 
@@ -128,13 +133,12 @@ function showTodoOfProject(projectId) {
         let todoList = JSON.parse(projectItem);
         for (let i = 0; i < todoList.length; i++) {
             let todo = todoList[i];
-            createTodoElement(todoList, i);
+            createTodoElement(todo);
         }
     }
 }
 
-function createTodoElement(todoList, todoIndex) {
-    let todo = todoList[todoIndex];
+function createTodoElement(todo) {
     const contentContainer = document.getElementById('content');
     let todoElement = createElement(contentContainer, 'div');
     
@@ -149,7 +153,8 @@ function createTodoElement(todoList, todoIndex) {
     editButton.textContent = 'edit';
 
     editButton.addEventListener('click', ()=>{
-        
+        todoElement.remove();
+        createForm(contentContainer, todo);
     })
 
     //deleteTodo
@@ -157,15 +162,9 @@ function createTodoElement(todoList, todoIndex) {
     deleteButton.textContent = 'delete';
     deleteButton.addEventListener('click', ()=>{
         todoElement.remove();
-        deleteTodo(todoList, todoIndex);
+        deleteTodo(todo);
         showTodo();
     })
-}
-
-function deleteTodo(todoList, todoIndex) {
-    let todo = todoList[todoIndex];
-    todoList.splice(todoIndex, 1);
-    localStorage.setItem(todo.project, JSON.stringify(todoList));
 }
 
 
