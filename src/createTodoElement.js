@@ -10,33 +10,37 @@ import { createTodo } from './createTodoData';
 
 export function addTodoEventListener() {
     const addTodo = document.getElementById('addTodo');
-    addTodo.addEventListener('click', ()=>{createForm()});
+    addTodo.addEventListener('click', ()=>{
+        const contentContainer = document.getElementById('content');
+        createForm(contentContainer)});
 }
 
 
 
-function createForm() {
+function createForm(formContainer, titleValue = '', descriptionValue = '', dueDateValue = '', priorityValue = '') {
     if (document.querySelector('form')) {
         return;
     }
-    const contentContainer = document.getElementById('content');
-    let todoForm = createElement(contentContainer, 'form');
+    let todoForm = createElement(formContainer, 'form');
     let title = createElement(todoForm, 'input');
     title.type = 'text';
     title.placeholder = 'Assignment name';
     title.name = 'title';
     title.required = true;
+    title.value = titleValue;
 
     let description = createElement(todoForm, 'input');
     description.type = 'text';
     description.placeholder = 'Description'
     description.name = 'description';
     description.required = true;
+    description.value = descriptionValue;
 
     let dueDate = createElement(todoForm, 'input');
     dueDate.type = 'date';
     dueDate.name = 'dueDate';
     dueDate.required = true;
+    dueDate.value = dueDateValue;
 
 
     let priority = createElement(todoForm, 'select');
@@ -47,6 +51,8 @@ function createForm() {
     createElement(priority, 'option').textContent = 'p3';
     createElement(priority, 'option').textContent = 'p4';
     priority.required = true;
+    priority.value = priorityValue;
+
 
     let submit = createElement(todoForm, 'input');
     submit.type = 'submit';
@@ -56,6 +62,7 @@ function createForm() {
         storeForm(event);
         todoForm.remove();
         showTodo();
+        return true;
     });
     
     let cancle = createElement(todoForm, 'button');
@@ -63,6 +70,7 @@ function createForm() {
     cancle.id = 'cancle';
     cancle.addEventListener('click', ()=>{
         todoForm.remove();
+        return false;
     })
 }
 
@@ -80,7 +88,6 @@ function storeForm(event) {
     const description = formData.get('description');
     const dueDate = formData.get('dueDate');
     const priority = formData.get('priority');
-
 
     // Store form data in local storage
     createTodo(currentProjectId, title, description, dueDate, priority, time);
@@ -121,21 +128,46 @@ function showTodoOfProject(projectId) {
         let todoList = JSON.parse(projectItem);
         for (let i = 0; i < todoList.length; i++) {
             let todo = todoList[i];
-            createTodoElement(todo);
+            createTodoElement(todoList, i);
         }
     }
 }
 
-function createTodoElement(todo) {
+function createTodoElement(todoList, todoIndex) {
+    let todo = todoList[todoIndex];
     const contentContainer = document.getElementById('content');
     let todoElement = createElement(contentContainer, 'div');
+    
     let title = createElement(todoElement, 'div');
     title.textContent = todo.title;
     let description = createElement(todoElement, 'div');
     description.textContent = todo.description;
     let dueDate = createElement(todoElement, 'div');
     dueDate.textContent = todo.time;
+
+    let editButton = createElement(todoElement, 'button', 'editButton');
+    editButton.textContent = 'edit';
+
+    editButton.addEventListener('click', ()=>{
+        
+    })
+
+    //deleteTodo
+    let deleteButton = createElement(todoElement, 'button', 'deleteButton');
+    deleteButton.textContent = 'delete';
+    deleteButton.addEventListener('click', ()=>{
+        todoElement.remove();
+        deleteTodo(todoList, todoIndex);
+        showTodo();
+    })
 }
+
+function deleteTodo(todoList, todoIndex) {
+    let todo = todoList[todoIndex];
+    todoList.splice(todoIndex, 1);
+    localStorage.setItem(todo.project, JSON.stringify(todoList));
+}
+
 
 export function showAllprojects() {
     for (let i = 0; i < localStorage.length; i++) {
