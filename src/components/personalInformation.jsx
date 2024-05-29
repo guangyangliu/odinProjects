@@ -40,7 +40,7 @@ export function PersonalInfo () {
            <input type="email" id="email" name="email" value={formInfo.email} required placeholder="953554041@qq.com" onChange={handleInputChange}/>
            </label>
             <label htmlFor="tel"><b>Tel</b>
-            <input type="tel" id="tel" name="tel" value={formInfo.tel} required placeholder="17688898568" onChange={handleInputChange}/>
+            <input type="tel" id="tel" name="tel" value={formInfo.tel} required placeholder="17688888888" onChange={handleInputChange}/>
             </label>
             <label htmlFor="submit">
             <input type="submit" id="submit" name="submit" value= 'Submit'/> 
