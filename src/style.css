@@ -1,0 +1,50 @@
+/*
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 0.5s ease-in-out;
+}*/
+
+
+body, #daysTemp{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    margin: 10px;
+}
+
+#currentTemp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+.items {
+    margin: 0;
+}
+
+#maxAndMinTemp, #hourTemp, .dayItem {
+    display: flex;
+    gap: 10px;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.dayItem {
+    align-items: center;
+}
