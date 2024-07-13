@@ -1,0 +1,50 @@
+.CartContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.items {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+}
+.item {
+    display: flex;
+    align-items: center;
+    border: 1pt solid black;
+    width: 100%;
+}
+
+img {
+    max-width: 200px;
+    max-height: 200px;
+}
+
+.img {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    flex: 1;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.item p {
+    margin: 0;
+  }
+  
+  .item input {
+    margin-top: 10px;
+  }
