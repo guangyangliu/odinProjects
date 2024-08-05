@@ -2,7 +2,7 @@
     <body>
         <h1><%= title %></h1>
         <% messages.map((message) => {%>
-            <li><%= message.text%> <%= message.user%> (<%= message.added%>)
+            <li><%= message.text%> <%= message.name%> (<%= message.added%>)
                 <a href="/new/<%= messages.indexOf(message)%>">Open</a></li>
         <%})%>
         <a href="/new">Add New Message</a>

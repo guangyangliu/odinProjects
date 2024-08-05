@@ -1,31 +1,30 @@
-const messages = [
-    {
-      text: "Hi there!",
-      user: "Amando",
-      added: new Date()
-    },
-    {
-      text: "Hello World!",
-      user: "Charles",
-      added: new Date()
-    }
-  ];
-  const display = (req, res) => res.render("index", {title: "Mini Messageboard",messages: messages});
-  const newMessage = (req,res) => res.render("form", {message: {text: "",user: "",}});
-  const submit = (req, res) => {
-    let messageText = req.body.message;
+const db = require('../db/queries');
+const asyncHandler = require('express-async-handler');
+
+const display = asyncHandler(async(req, res) => {
+    const messages = await db.getAllMessages();
+    res.render("index", {title: "Mini Messageboard",messages: messages})
+  });
+
+  const newMessage =  asyncHandler(async(req,res) => res.render("form", {message: {text: "",name: "",}}));
+  
+  const submit =  asyncHandler(async(req, res) => {
+    let text = req.body.message;
     let name = req.body.name;
-    messages.push({text: messageText, user: name, added: new Date()});
+    await db.addMessage(text, name);
     res.redirect("/")
-  }
-  const detail = (req, res) => {
+  });
+
+
+  const detail = asyncHandler(async(req, res) => {
     let index = req.params.index;
+    const messages = await db.getAllMessages();
     let message = messages[index];
     if(message) {
         res.render("form", {message: message})
     } else {
         res.status(404).send('Message not found');
     }
-  }
+  });
 module.exports = {display, newMessage, submit, detail};
 
