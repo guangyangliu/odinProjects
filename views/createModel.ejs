@@ -1,0 +1,21 @@
+<html>
+    <body>
+        <form method="post" action="/create/model">
+            <label for="name">Car name</label>
+            <select name="name" id="name">
+                <% name.map(car => {%>
+                    <option value="<%= car.name %>"><%= car.name %></option>
+                <%})%>
+            </select>
+            <label for="model">Car model</label>
+            <input type="text" name="model" id="model" placeholder="xDrive30Li">
+            
+            <label for="price">Price</label>
+            <input type="number" name="price" id="price">
+
+            <label for="quantity">Quantity</label>
+            <input type="number" name="quantity" id="quantity">
+            <button value="submit">submit</button>
+        </form>
+    </body>
+</html>
