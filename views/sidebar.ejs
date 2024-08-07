@@ -1,0 +1,11 @@
+<html>
+    <body>
+        <h2>Models</h2>
+        <ul>
+        <li>All models</li>
+        <% category.map(car => {%>
+            <li><%= car.type %></li>
+        <%})%>
+        </ul>
+    </body>
+</html>

@@ -2,6 +2,11 @@ const pool = require('../db/pool');
 const db = require('../db/querries');
 const asyncHandler = require('express-async-handler');
 
+const homeGet = asyncHandler(async(req, res) => {
+    const category = await db.getCategory();
+    res.render('home', {category: category});
+});
+
 const getAllcars = asyncHandler(async(req, res) => {
     const cars = await db.getAllCars();
 });
@@ -55,6 +60,7 @@ const createModelPost = asyncHandler(async(req, res) => {
 
 
 module.exports = {
+    homeGet,
     getCategory,
     getCarName,
     createCategoryGet,
