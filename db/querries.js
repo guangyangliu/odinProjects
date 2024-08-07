@@ -53,6 +53,12 @@ async function createModel(name, model, price, quantity) {
     await pool.query(sql, value);
 }
 
+async function deleteModel(name, model) {
+    const sql = `DELETE FROM model WHERE name = $1 AND model = $2`;
+    const value = [name, model];
+    await pool.query(sql, value);
+}
+
 
 module.exports = {
     getCategory,
@@ -63,5 +69,6 @@ module.exports = {
     getAllCarName,
     getDetail,
     getImg,
-    getModel
+    getModel,
+    deleteModel
 }

@@ -27,6 +27,7 @@
                             <td><%= car.price %></td>
                             <td><%= car.quantity %></td>
                             <td><a href="/edit/?name=<%= car.name %>&model=<%= car.model %>">Edit</a></td>
+                            <td><a href="/delete/<%= car.name %>/<%= car.model %>">Delete</a></td>
                         </tr>
                     <% }) %>
                 </tbody>

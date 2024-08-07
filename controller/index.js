@@ -32,8 +32,7 @@ const createGet = asyncHandler(async(req,res) => {
     if(form === "category"){
         res.render("category");
     }else if(form === "model"){
-        const name = await db.getAllCarName();
-        res.render("model", {name: name});
+        res.render("model", {modelData: null});
     }else{
         res.render("create");
     }
@@ -70,6 +69,14 @@ const editGet = asyncHandler(async(req, res) => {
     res.render("model", {modelData: modelData[0]});
 })
 
+//delete
+const deleteGet = asyncHandler(async(req, res) => {
+    const name = req.params.name;
+    const model = req.params.model;
+    await db.deleteModel(name, model);
+    res.redirect('/detail/' + name);
+})
+
 module.exports = {
     homeGet,
     getCategory,
@@ -78,5 +85,6 @@ module.exports = {
     createCategoryPost,
     createModelPost,
     detailGet,
-    editGet
+    editGet,
+    deleteGet
 }

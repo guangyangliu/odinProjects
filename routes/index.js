@@ -15,10 +15,10 @@ router.get('/detail/:name', controller.detailGet);
 
 //edit
 router.get('/edit', controller.editGet);
+
+//delete
+router.get('/delete/:name/:model', controller.deleteGet);
 /*
-
-
-
 
 
 router.get('/category', controller.getCategory);
