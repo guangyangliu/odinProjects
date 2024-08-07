@@ -6,7 +6,7 @@ async function getCategory() {
 }
 
 async function getAllcarInfo() {
-    const {rows} = await pool.query(`SELECT name, image FROM category ORDER BY name ASC`);
+    const {rows} = await pool.query(`SELECT name, type,image FROM category ORDER BY name ASC`);
     return rows;
 }
 

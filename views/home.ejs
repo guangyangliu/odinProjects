@@ -4,18 +4,36 @@
     </head>
     <body>
         <div id="home-container">
-        <div id="sidebar">
-            <%- include("sidebar.ejs", {category: category}) %>
-        </div>
-        <div id="content">
-            <% info.map(car => { %>
-                <div class="car-card">
-                    <img src="<%= car.image %>" alt="<%= car.name %>">
-                    <p style="text-align:left;"><%= car.name %></p>
-                    
-                </div>
-            <%}) %>
-        </div>
+            <div id="sidebar">
+                <%- include("sidebar.ejs", {category: category}) %>
+            </div>
+
+            <div id="content">
+                <% info.map(car => { %>
+                    <div class="car-card">
+                        <img src="<%= car.image %>" alt="<%= car.name %>">
+                        <p style="text-align:left;"><%= car.name %></p>
+                        
+                    </div>
+                <%}) %>
+            </div>
     </div>
     </body>
+    <script>
+        let carInfo = <%- JSON.stringify(info) %>;
+        document.getElementById('sidebar').addEventListener('click', (event) => {
+            const type = event.target.id;
+            showCars(type);                
+        });
+
+        function showCars(type){
+            const content = document.getElementById('content');
+            content.innerHTML = "";
+            carInfo.forEach(car => {
+                if(type === 'all' || car.type === type){
+                    content.innerHTML += `<div class="car-card"><img src="${car.image}" alt="${car.name}"><p style="text-align:left;">${car.name}</p></div>`;
+                }
+            });
+        }
+    </script>
 </html>

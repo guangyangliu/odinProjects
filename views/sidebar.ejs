@@ -1,9 +1,9 @@
 <div>
         <h2>Models</h2>
         <ul>
-        <li>All models</li>
+        <li id="all">All models</li>
         <% category.map(car => {%>
-            <li><%= car.type %></li>
+            <li id="<%= car.type %>"><%= car.type %></li>
         <%})%>
         </ul>
 </div>
