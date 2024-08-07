@@ -16,8 +16,9 @@ DROP TABLE IF EXISTS category;
 CREATE TABLE IF NOT EXISTS category (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR (255) UNIQUE,
-    type VARCHAR (255),
-    image TEXT
+    type VARCHAR (255) NOT NULL,
+    image TEXT NOT NULL,
+    UNIQUE (name, type)
 );
 
 INSERT INTO category (name, type, image) 

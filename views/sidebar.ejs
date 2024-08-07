@@ -1,9 +1,11 @@
 <div>
         <h2>Models</h2>
-        <ul>
-        <li id="all">All models</li>
-        <% category.map(car => {%>
-            <li id="<%= car.type %>"><%= car.type %></li>
-        <%})%>
-        </ul>
+        <div class="model-list">
+            <ul>
+            <li id="all">All models</li>
+            <% category.map(car => {%>
+                <li id="<%= car.type %>"><%= car.type %></li>
+            <%})%>
+            </ul>
+        </div>
 </div>

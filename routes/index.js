@@ -4,15 +4,23 @@ const controller = require("../controller/index");
 
 router.get('/', controller.homeGet);
 
+router.get('/create', controller.createGet);
+router.post('/create/category', controller.createCategoryPost);
+router.post('/create/model', controller.createModelPost);
+
+router.get('/detail/:name', controller.detailGet);
+
+
 /*
+
+
+
+
+
 router.get('/category', controller.getCategory);
 router.get('/category/:type', controller.getCarName);
 
-router.get('/create/category', controller.createCategoryGet);
-router.post('/create/category', controller.createCategoryPost);
 
-router.get('/create/model', controller.createModelGet);
-router.post('/create/model', controller.createModelPost);
 
 router.get('/update');
 router.get('/delete');

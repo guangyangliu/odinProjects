@@ -10,6 +10,22 @@ async function getAllcarInfo() {
     return rows;
 }
 
+async function getDetail(name) {
+    const {rows} = await pool.query(`SELECT * FROM model WHERE name = $1`, [name]);
+    return rows;
+}
+
+
+async function getImg(name) {
+    const {rows} = await pool.query(`SELECT image FROM category WHERE name = $1`, [name]);
+    return rows;
+}
+
+async function getAllCarName() {
+    const {rows} = await pool.query(`SELECT name FROM category ORDER BY name ASC`);
+    return rows;
+}
+
 async function getCarName(carType) {
     const {rows} = await pool.query(`SELECT name FROM category WHERE type = $1`, [carType]);
     return rows;
@@ -17,10 +33,10 @@ async function getCarName(carType) {
 
 
 
-async function createCategory(name, type) {
-    const sql = `INSERT INTO category (name,type) VALUES ($1, $2)
+async function createCategory(name, type, img) {
+    const sql = `INSERT INTO category (name,type, image) VALUES ($1, $2, $3)
     ON CONFLICT (name) DO NOTHING`;
-    const value = [name,type];
+    const value = [name,type, img];
     await pool.query(sql, value);
 }
 
@@ -37,5 +53,8 @@ module.exports = {
     getCarName,
     createCategory,
     getAllcarInfo,
-    createModel
+    createModel,
+    getAllCarName,
+    getDetail,
+    getImg
 }

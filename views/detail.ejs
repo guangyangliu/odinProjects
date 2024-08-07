@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/detail.css">
+    </head>
+    <body>
+        <div id="container">
+            <%- include("header.ejs") %>
+        </div>
+        <div id="content">
+            <img src="<%= image[0].image %>">
+            <h2><%= name %></h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% detail.map((car) => { %>
+                        <tr>
+                            <td><%= car.model %></td>
+                            <td><%= car.price %></td>
+                            <td><%= car.quantity %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

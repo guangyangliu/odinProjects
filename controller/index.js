@@ -1,3 +1,4 @@
+const { name } = require('ejs');
 const pool = require('../db/pool');
 const db = require('../db/querries');
 const asyncHandler = require('express-async-handler');
@@ -27,25 +28,17 @@ const getCarName = asyncHandler(async(req, res) => {
 
 //create
 
-const create = asyncHandler(async(req,res) => {
-    const data = req.params.data;
-    if(data == 'category') {
-
-    } else if(data == 'model') {
-
-    }
-});
-
-
-const createCategoryGet = asyncHandler(async(req,res) => {
-    res.render("createCategory");
+const createGet = asyncHandler(async(req,res) => {
+    const name = await db.getAllCarName();
+    res.render("create", {name: name});
 });
 
 const createCategoryPost = asyncHandler(async(req,res) => {
     const name = req.body.name;
     const type = req.body.type;
-    await db.createCategory(name, type);
-    res.redirect('/category')
+    const img = req.body.img;
+    await db.createCategory(name, type,img);
+    res.redirect('/')
 });
 
 //model
@@ -56,7 +49,15 @@ const createModelGet = asyncHandler(async(req, res) => {
 const createModelPost = asyncHandler(async(req, res) => {
     const {name, model, price, quantity} = req.body;
     await db.createModel(name, model, price, quantity);
-    res.redirect('/category')
+    res.redirect('/')
+})
+
+const detailGet = asyncHandler(async(req, res) => {
+    const name = req.params.name;
+    
+    const detail = await db.getDetail(name);
+    const image = await db.getImg(name);
+    res.render("detail", {detail: detail, image: image, name: name});
 })
 
 
@@ -64,8 +65,9 @@ module.exports = {
     homeGet,
     getCategory,
     getCarName,
-    createCategoryGet,
+    createGet,
     createCategoryPost,
     createModelGet,
-    createModelPost
+    createModelPost,
+    detailGet
 }

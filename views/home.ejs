@@ -1,29 +1,36 @@
 <html>
     <head>
-        <link rel="stylesheet" href="/css/homeStyle.css">
+        <link rel="stylesheet" href="/css/home.css">
+        <link rel="stylesheet" href="/css/header.css">
     </head>
     <body>
-        <div id="home-container">
+        
+            <%- include("header.ejs") %>
+            <div id="home-container">
             <div id="sidebar">
                 <%- include("sidebar.ejs", {category: category}) %>
             </div>
 
             <div id="content">
                 <% info.map(car => { %>
-                    <div class="car-card">
+                    <div class="car-card" id="<%= car.name %>" onclick="showDetail('<%= car.name %>')">
                         <img src="<%= car.image %>" alt="<%= car.name %>">
                         <p style="text-align:left;"><%= car.name %></p>
-                        
                     </div>
                 <%}) %>
             </div>
     </div>
     </body>
-    <script>
+    <script >
         let carInfo = <%- JSON.stringify(info) %>;
+        let category = <%- JSON.stringify(category) %>;
+
         document.getElementById('sidebar').addEventListener('click', (event) => {
             const type = event.target.id;
-            showCars(type);                
+            const typeExists = type == 'all'? true : category.some(item => item.type === type);
+            if(typeExists){
+                showCars(type);
+            }
         });
 
         function showCars(type){
@@ -31,9 +38,13 @@
             content.innerHTML = "";
             carInfo.forEach(car => {
                 if(type === 'all' || car.type === type){
-                    content.innerHTML += `<div class="car-card"><img src="${car.image}" alt="${car.name}"><p style="text-align:left;">${car.name}</p></div>`;
+                    content.innerHTML += `<div class="car-card" id="${car.name}" onclick="showDetail('${car.name}')"><img src="${car.image}" alt="${car.name}"><p style="text-align:left;">${car.name}</p></div>`;
                 }
             });
         }
+        
+        function showDetail(name){
+            window.location.href = `/detail/${name}`;
+        };
     </script>
 </html>
