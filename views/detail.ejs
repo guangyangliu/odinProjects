@@ -8,7 +8,7 @@
             <%- include("header.ejs") %>
         </div>
         <div id="content">
-            <img src="<%= image[0].image %>">
+            <img src="<%= image %>">
             <h2><%= name %></h2>
             <table>
                 <thead>
@@ -16,6 +16,8 @@
                         <th>Model</th>
                         <th>Price</th>
                         <th>Quantity</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,10 +26,12 @@
                             <td><%= car.model %></td>
                             <td><%= car.price %></td>
                             <td><%= car.quantity %></td>
+                            <td><a href="/edit/?name=<%= car.name %>&model=<%= car.model %>">Edit</a></td>
                         </tr>
                     <% }) %>
                 </tbody>
             </table>
+            
         </div>
     </body>
 </html>

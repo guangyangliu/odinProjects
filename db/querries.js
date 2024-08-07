@@ -15,6 +15,11 @@ async function getDetail(name) {
     return rows;
 }
 
+async function getModel(name, model) {
+    const {rows} = await pool.query(`SELECT * FROM model WHERE name = $1 AND model = $2`, [name, model]);
+    return rows;
+}
+
 
 async function getImg(name) {
     const {rows} = await pool.query(`SELECT image FROM category WHERE name = $1`, [name]);
@@ -42,7 +47,8 @@ async function createCategory(name, type, img) {
 
 async function createModel(name, model, price, quantity) {
     const sql = `INSERT INTO model (name, model, price, quantity) VALUES ($1, $2, $3, $4)
-    ON CONFLICT (name, model) DO NOTHING`;
+    ON CONFLICT (name, model) DO UPDATE
+        SET price = EXCLUDED.price, quantity = EXCLUDED.quantity`;
     const value = [name, model, price, quantity];
     await pool.query(sql, value);
 }
@@ -56,5 +62,6 @@ module.exports = {
     createModel,
     getAllCarName,
     getDetail,
-    getImg
+    getImg,
+    getModel
 }

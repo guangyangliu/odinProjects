@@ -4,13 +4,17 @@ const controller = require("../controller/index");
 
 router.get('/', controller.homeGet);
 
-router.get('/create', controller.createGet);
+//create
+router.get('/create/:form?', controller.createGet);
 router.post('/create/category', controller.createCategoryPost);
 router.post('/create/model', controller.createModelPost);
 
+
+//detail
 router.get('/detail/:name', controller.detailGet);
 
-
+//edit
+router.get('/edit', controller.editGet);
 /*
 
 

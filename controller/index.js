@@ -27,10 +27,16 @@ const getCarName = asyncHandler(async(req, res) => {
 
 
 //create
-
 const createGet = asyncHandler(async(req,res) => {
-    const name = await db.getAllCarName();
-    res.render("create", {name: name});
+    const form = req.params.form;
+    if(form === "category"){
+        res.render("category");
+    }else if(form === "model"){
+        const name = await db.getAllCarName();
+        res.render("model", {name: name});
+    }else{
+        res.render("create");
+    }
 });
 
 const createCategoryPost = asyncHandler(async(req,res) => {
@@ -42,10 +48,6 @@ const createCategoryPost = asyncHandler(async(req,res) => {
 });
 
 //model
-const createModelGet = asyncHandler(async(req, res) => {
-    const name = await db.getAllCarName();
-    res.render("createModel", {name: name});
-})
 const createModelPost = asyncHandler(async(req, res) => {
     const {name, model, price, quantity} = req.body;
     await db.createModel(name, model, price, quantity);
@@ -57,9 +59,16 @@ const detailGet = asyncHandler(async(req, res) => {
     
     const detail = await db.getDetail(name);
     const image = await db.getImg(name);
-    res.render("detail", {detail: detail, image: image, name: name});
+    res.render("detail", {detail: detail, image: image[0].image, name: name});
 })
 
+//edit
+const editGet = asyncHandler(async(req, res) => {
+    const name = req.query.name;
+    const model = req.query.model;
+    const modelData = await db.getModel(name, model);
+    res.render("model", {modelData: modelData[0]});
+})
 
 module.exports = {
     homeGet,
@@ -67,7 +76,7 @@ module.exports = {
     getCarName,
     createGet,
     createCategoryPost,
-    createModelGet,
     createModelPost,
-    detailGet
+    detailGet,
+    editGet
 }
