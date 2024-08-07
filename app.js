@@ -20,6 +20,4 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', indexRouter);
 
 const PORT = process.env.PORT || 3000
-app.listen(PORT, console.log('webpage conneted'));
-
-module.exports = app;
+app.listen(PORT, () => console.log(`Server connected on port ${PORT}`));
