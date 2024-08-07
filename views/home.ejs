@@ -4,6 +4,9 @@
             <%- include("sidebar.ejs", {category: category}) %>
         </div>
         <div id="content">
+            <% name.map(car => { %>
+                <div><%= car.name %></div>
+            <%}) %>
         </div>
     </body>
 </html>

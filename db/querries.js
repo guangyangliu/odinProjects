@@ -5,15 +5,17 @@ async function getCategory() {
     return rows;
 }
 
+async function getAllCarName() {
+    const {rows} = await pool.query(`SELECT name FROM category ORDER BY name ASC`);
+    return rows;
+}
+
 async function getCarName(carType) {
     const {rows} = await pool.query(`SELECT name FROM category WHERE type = $1`, [carType]);
     return rows;
 }
 
-async function getAllCarName() {
-    const {rows} = await pool.query(`SELECT name FROM category`);
-    return rows;
-}
+
 
 async function createCategory(name, type) {
     const sql = `INSERT INTO category (name,type) VALUES ($1, $2)

@@ -4,7 +4,8 @@ const asyncHandler = require('express-async-handler');
 
 const homeGet = asyncHandler(async(req, res) => {
     const category = await db.getCategory();
-    res.render('home', {category: category});
+    const name = await db.getAllCarName();
+    res.render('home', {category: category, name: name});
 });
 
 const getAllcars = asyncHandler(async(req, res) => {
