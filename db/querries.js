@@ -5,8 +5,8 @@ async function getCategory() {
     return rows;
 }
 
-async function getAllCarName() {
-    const {rows} = await pool.query(`SELECT name FROM category ORDER BY name ASC`);
+async function getAllcarInfo() {
+    const {rows} = await pool.query(`SELECT name, image FROM category ORDER BY name ASC`);
     return rows;
 }
 
@@ -36,6 +36,6 @@ module.exports = {
     getCategory,
     getCarName,
     createCategory,
-    getAllCarName,
+    getAllcarInfo,
     createModel
 }

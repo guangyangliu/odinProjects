@@ -3,13 +3,19 @@
         <link rel="stylesheet" href="/css/homeStyle.css">
     </head>
     <body>
+        <div id="home-container">
         <div id="sidebar">
             <%- include("sidebar.ejs", {category: category}) %>
         </div>
         <div id="content">
-            <% name.map(car => { %>
-                <div><%= car.name %></div>
+            <% info.map(car => { %>
+                <div class="car-card">
+                    <img src="<%= car.image %>" alt="<%= car.name %>">
+                    <p style="text-align:left;"><%= car.name %></p>
+                    
+                </div>
             <%}) %>
         </div>
+    </div>
     </body>
 </html>
