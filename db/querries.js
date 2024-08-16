@@ -36,6 +36,10 @@ async function getCarName(carType) {
     return rows;
 }
 
+async function getTypeAndModel() {
+    const {rows} = await pool.query(`SELECT category.type, model.* FROM category LEFT OUTER JOIN model ON model.name = category.name`);
+    return rows;
+}
 
 
 async function createCategory(name, type, img) {
@@ -53,10 +57,28 @@ async function createModel(name, model, price, quantity) {
     await pool.query(sql, value);
 }
 
+//delete
 async function deleteModel(name, model) {
     const sql = `DELETE FROM model WHERE name = $1 AND model = $2`;
     const value = [name, model];
     await pool.query(sql, value);
+}
+
+async function deleteType(type) {
+    const sql1 = `DELETE FROM model WHERE name IN (SELECT name FROM category WHERE type = $1)`;
+    const sql2 = `DELETE FROM category WHERE type = $1`;
+    const value = [type];
+    
+    await pool.query(sql1, value);
+    await pool.query(sql2, value);
+}
+
+async function deleteName(name) {
+    const sql = `DELETE FROM category WHERE name = $1`;
+    const sql2 = `DELETE FROM model WHERE name = $1`;
+    const value = [name];
+    await pool.query(sql, value);
+    await pool.query(sql2, value);
 }
 
 
@@ -70,5 +92,7 @@ module.exports = {
     getDetail,
     getImg,
     getModel,
-    deleteModel
+    deleteModel,
+    getTypeAndModel,
+    deleteType
 }

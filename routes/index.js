@@ -18,8 +18,10 @@ router.get('/edit', controller.editGet);
 
 //delete
 router.get('/delete/:name/:model', controller.deleteGet);
+router.get('/delete', controller.deleteCategoryGet);
+router.post('/delete/type', controller.deleteTypePost);
+router.post('/delete/name', controller.deleteNamePost);
 /*
-
 
 router.get('/category', controller.getCategory);
 router.get('/category/:type', controller.getCarName);

@@ -9,10 +9,6 @@ const homeGet = asyncHandler(async(req, res) => {
     res.render('home', {category: category, info: info});
 });
 
-const getAllcars = asyncHandler(async(req, res) => {
-    const cars = await db.getAllCars();
-});
-
 
 const getCategory = asyncHandler(async(req, res) => {
     const category = await db.getCategory();
@@ -77,6 +73,26 @@ const deleteGet = asyncHandler(async(req, res) => {
     res.redirect('/detail/' + name);
 })
 
+const deleteCategoryGet = asyncHandler(async(req, res) => {
+    const category = await db.getCategory();
+    const name = await db.getAllCarName();
+    res.render("delete", {category: category, name: name});
+})
+
+const deleteTypePost = asyncHandler(async(req, res) => {
+    const type = req.body.type;
+    await db.deleteType(type);
+    res.redirect('/');
+})
+
+const deleteNamePost = asyncHandler(async(req,res) => {
+    const name = req.body.name;
+    await db.deleteName(name);
+    res.redirect('/');
+})
+
+
+
 module.exports = {
     homeGet,
     getCategory,
@@ -86,5 +102,8 @@ module.exports = {
     createModelPost,
     detailGet,
     editGet,
-    deleteGet
+    deleteGet,
+    deleteCategoryGet,
+    deleteTypePost,
+    deleteNamePost
 }

@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/header.css">
+    </head>
+    <body>
+        <div id="container">
+            <%- include("header.ejs") %>
+            <p style="color: red;">If you want to test delete, please create new category or model first. Delete will delete all data under that type or name.</h1>
+            <form action="/delete/type" method="post">
+                <h3>Delete according Car type</h3>
+                <select name="type">
+                    <% category.map(car => {%>
+                        <option value="<%= car.type %>"><%= car.type %></option>
+                    <%}) %>
+                    <input type="submit" value="Delete">
+                </select>
+            </form>
+
+            <form action="/delete/name" method="post">
+                <h3>Delete according Car name</h3>
+                <select name="type">
+                    <% name.map(car => {%>
+                        <option value="<%= car.name %>"><%= car.name %></option>
+                    <%}) %>
+                    <input type="submit" value="Delete">
+                </select>
+            </form>
+        </div>
+    </body>
+</html>
