@@ -12,7 +12,7 @@ const validateSignup = [
         .matches(/^[A-Za-z]+$/).withMessage('Last name must contain only letters'),
 ];
 
-exports.signup = [
+exports.signupPost = [
     validateSignup,
     asyncHandler(async (req, res) => {
         const errors = validationResult(req);
@@ -21,5 +21,14 @@ exports.signup = [
         }
     const {username, password, first_name, last_name} = req.body;
     await model.createUser(username, password, first_name, last_name);
-    res.redirect('/');
+    res.redirect('/join');
 })];
+
+
+exports.joinPost = asyncHandler(async (req, res) => {
+    const {passcode} = req.body;
+    if(passcode !== process.env.PASSCODE){
+        return res.status(400).render('join', {errors: [{msg:'Invalid passcode'}]});
+    }
+    res.redirect('/');
+});

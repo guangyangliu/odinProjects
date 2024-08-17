@@ -1,0 +1,13 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Join the club</h1>
+        <%- include("partials/errors.ejs") %>
+        <form action="/join" method="post">
+            <label for="passcode">Passcode:</label>
+            <input type="password" id="passcode" name="passcode">
+            <button type="submit">Join</button>
+        </form>
+    </body>
+</html>
