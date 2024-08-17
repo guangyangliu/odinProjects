@@ -4,9 +4,10 @@ require('dotenv').config();
 const sql = `
     CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
-        full_name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL UNIQUE,
+        username VARCHAR(255) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
+        first_name VARCHAR(255) NOT NULL,
+        last_name VARCHAR(255) NOT NULL,
         membership_status BOOLEAN NOT NULL DEFAULT FALSE
     );
 
@@ -15,7 +16,7 @@ const sql = `
         title VARCHAR(255) NOT NULL,
         text TEXT NOT NULL,
         time TIMESTAMP NOT NULL DEFAULT NOW(),
-        full_name VARCHAR(255) NOT NULL
+        FOREIGN KEY (username) REFERENCES users (username)
     );
 `;
 
@@ -31,5 +32,4 @@ async function main() {
     console.log("done");
   }
   
-  main();
-  
+  main();  
