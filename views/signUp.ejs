@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="/css/signUp.css">
     </head>
     <body>
-        
+        <%- include("partials/errors.ejs") %>
         <form action="/signup" method="post">
             <label for="username">Username</label>
             <input type="email" name="username" placeholder="123456789@gmail.com" required>
@@ -16,10 +16,10 @@
             <input type="password" name="confirm_password" placeholder="confirm password" required>
             
             <label for="first_name">First Name</label>
-            <input type="text" name="first_name" placeholder="first name" required>
+            <input type="text" name="first_name" placeholder="first name" required style="text-transform: capitalize;">
 
             <label for="last_name">Last Name</label>
-            <input type="text" name="last_name" placeholder="last name" required>
+            <input type="text" name="last_name" placeholder="last name" required style="text-transform: capitalize;">
             
 
             <input type="submit" value="Sign Up">
