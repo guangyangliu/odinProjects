@@ -3,7 +3,11 @@
     <div id="name">Clubhouse</div>
     <div id="links">
        <% if (isLoggedIn) { %>
-        <a href="/post">Create Post</a>
+        <% if (isMember) { %>
+            <a href="/post">Create Post</a>
+        <% } else { %>
+            <a href="/join">Join</a>
+        <% } %>
         <a href="/logout">Logout</a>
         <% } else { %>
             <a href="/signup">Sign Up</a>

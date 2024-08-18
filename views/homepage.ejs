@@ -10,7 +10,7 @@
     <div id="content">
         <ul>
             <% messages.forEach(message => { %>
-                <li><%= message.title %>,<%= message.text %>, <%= isLoggedIn ? message.username : '' %></li>
+                <li>Title: <%= message.title %>; Text: <%= message.text %>, <%= isLoggedIn ? 'Author: ' + message.first_name + ' ' + message.last_name : '' %></li>
             <% }) %>
         </ul>
     </div>

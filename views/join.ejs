@@ -2,9 +2,9 @@
     <head>
     </head>
     <body>
-        <h1>Join the club</h1>
+        <h2>Join club, and you can view authors and create posts.</h2>
         <%- include("partials/errors.ejs") %>
-        <form action="/join/<%= username %>" method="post">
+        <form action="/join" method="post">
             <label for="passcode">Passcode:</label>
             <input type="password" id="passcode" name="passcode">
             <button type="submit">Join</button>

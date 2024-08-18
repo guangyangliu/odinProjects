@@ -12,12 +12,11 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', indexController.signupPost);
 
-router.get('/join/:username',indexController.joinGet);
+router.get('/join',authenticate.isLoggedIn,indexController.joinGet);
 
-router.post('/join/:username', indexController.joinPost);
+router.post('/join', authenticate.isLoggedIn, indexController.joinPost);
 
-router.get('/login', (req, res, next) => {
-    console.log('login get');
+router.get('/login', (req, res) => {
     res.render('login');
 });
 

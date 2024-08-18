@@ -5,8 +5,13 @@ const passport = require('passport');
 
 
 exports.homepage = asyncHandler(async (req, res) => {
+    const isLoggedIn = req.isAuthenticated();
     const messages = await model.getMessages();
-    res.render('homepage', {isLoggedIn: req.isAuthenticated(), messages: messages});
+    let isMember = false;
+    if(isLoggedIn){
+        isMember = req.user.membership;
+    }
+    res.render('homepage', {isLoggedIn: isLoggedIn, isMember: isMember, messages: messages});
 });
 
 const validateSignup = [
@@ -33,16 +38,17 @@ exports.signupPost = [
 
 
 exports.joinGet = asyncHandler(async (req, res) => {
-    const {username} = req.params;
-    res.render('join',{username:username});
+    res.render('join');
 });
 
 exports.joinPost = asyncHandler(async (req, res) => {
     const {passcode} = req.body;
-    const {username} = req.params;
+    const {username} = req.user;
+    
     if(passcode !== process.env.PASSCODE){
-        return res.status(400).render('join', {username:username, errors: [{msg:'Invalid passcode'}]});
+        return res.status(400).render('join', {errors: [{msg:'Invalid passcode'}]});
     }
+    
     await model.changeMembership(username);
     res.redirect('/');
 });

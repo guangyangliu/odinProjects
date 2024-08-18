@@ -26,6 +26,6 @@ exports.createPost = async (username, title, text) => {
 }
 
 exports.getMessages = async () => {
-    const result = await model.query(`SELECT * FROM messages`);
+    const result = await model.query(`SELECT messages.title, messages.text, users.first_name, users.last_name FROM messages JOIN users ON messages.username = users.username`);
     return result.rows;
 }
