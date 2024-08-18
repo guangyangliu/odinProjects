@@ -9,7 +9,7 @@ const PgStore = require('connect-pg-simple')(session);
 
 
 require('dotenv').config();
-require('./passport');
+require('./model/populateModel');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
