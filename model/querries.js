@@ -4,7 +4,8 @@ const bcrypt = require('bcryptjs');
 
 exports.createUser = async (username, password, first_name, last_name) => {
     const hash = await bcrypt.hash(password, 10);
-    await model.query(`INSERT INTO users (username, password, first_name, last_name) VALUES ($1, $2, $3, $4) RETURNING *`, [username, hash, first_name, last_name]);
+    const result =  await model.query(`INSERT INTO users (username, password, first_name, last_name) VALUES ($1, $2, $3, $4) RETURNING *`, [username, hash, first_name, last_name]);
+    return result.rows[0];
 };
 
 exports.changeStatus = async (username, membership, admin) => {
