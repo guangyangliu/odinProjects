@@ -16,6 +16,7 @@ const sql = `
         title VARCHAR(255) NOT NULL,
         text TEXT NOT NULL,
         time TIMESTAMP NOT NULL DEFAULT NOW(),
+        username VARCHAR(255) NOT NULL,
         FOREIGN KEY (username) REFERENCES users (username)
     );
 `;

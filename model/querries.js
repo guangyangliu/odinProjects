@@ -20,3 +20,12 @@ exports.getUserById = async (userId) => {
     const result = await model.query(`SELECT * FROM users WHERE id = $1`, [userId]);
     return result.rows[0];
 }
+
+exports.createPost = async (username, title, text) => {
+    await model.query(`INSERT INTO messages (username, title, text) VALUES ($1, $2, $3)`, [username, title, text]);
+}
+
+exports.getMessages = async () => {
+    const result = await model.query(`SELECT * FROM messages`);
+    return result.rows;
+}

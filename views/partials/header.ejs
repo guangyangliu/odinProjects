@@ -1,0 +1,13 @@
+<link rel="stylesheet" href="/css/header.css">
+<div id="header">
+    <div id="name">Clubhouse</div>
+    <div id="links">
+       <% if (isLoggedIn) { %>
+        <a href="/post">Create Post</a>
+        <a href="/logout">Logout</a>
+        <% } else { %>
+            <a href="/signup">Sign Up</a>
+            <a href="/login">Login</a>
+        <% } %>
+    </div>
+</div>

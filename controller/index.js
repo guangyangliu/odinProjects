@@ -3,6 +3,12 @@ const model = require('../model/querries');
 const {body, validationResult} = require('express-validator');
 const passport = require('passport');
 
+
+exports.homepage = asyncHandler(async (req, res) => {
+    const messages = await model.getMessages();
+    res.render('homepage', {isLoggedIn: req.isAuthenticated(), messages: messages});
+});
+
 const validateSignup = [
     body('username').trim().isEmail().withMessage('Invalid email'),
     body('password').trim().isLength({min: 6}).withMessage('Password must be at least 6 characters'),
@@ -39,4 +45,21 @@ exports.joinPost = asyncHandler(async (req, res) => {
     }
     await model.changeMembership(username);
     res.redirect('/');
+});
+
+exports.loginPost = passport.authenticate('local', {failureRedirect: '/login', successRedirect: '/'});
+
+exports.postPost = asyncHandler(async (req, res) => {
+    const {title, text} = req.body;
+    const {username} = req.user;
+    await model.createPost(username, title, text);
+    res.redirect('/');
+});
+
+
+exports.logout = asyncHandler(async (req, res) => {
+    req.logout((err) => {
+        if(err) return next(err);
+        res.redirect('/');
+    });
 });
