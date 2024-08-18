@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const model = require('../model/querries');
 const {body, validationResult} = require('express-validator');
+const passport = require('passport');
 
 const validateSignup = [
     body('username').trim().isEmail().withMessage('Invalid email'),
@@ -21,14 +22,21 @@ exports.signupPost = [
         }
     const {username, password, first_name, last_name} = req.body;
     await model.createUser(username, password, first_name, last_name);
-    res.redirect('/join');
+    res.redirect('/join/'+username);
 })];
 
 
+exports.joinGet = asyncHandler(async (req, res) => {
+    const {username} = req.params;
+    res.render('join',{username:username});
+});
+
 exports.joinPost = asyncHandler(async (req, res) => {
     const {passcode} = req.body;
+    const {username} = req.params;
     if(passcode !== process.env.PASSCODE){
-        return res.status(400).render('join', {errors: [{msg:'Invalid passcode'}]});
+        return res.status(400).render('join', {username:username, errors: [{msg:'Invalid passcode'}]});
     }
+    await model.changeMembership(username);
     res.redirect('/');
 });
