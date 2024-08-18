@@ -70,7 +70,13 @@ exports.joinPost = asyncHandler(async (req, res) => {
     res.redirect('/');
 });
 
-exports.loginPost = passport.authenticate('local', {failureRedirect: '/login', successRedirect: '/'});
+
+exports.loginGet = asyncHandler(async(req, res) => {
+    res.render('login');
+})
+exports.loginPost = passport.authenticate('local', {failureRedirect: '/login', failureFlash: true, successRedirect: '/'});
+
+
 
 exports.postPost = asyncHandler(async (req, res) => {
     const {title, text} = req.body;

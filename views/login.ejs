@@ -1,13 +1,21 @@
 <html>
+    <head>
+        <link rel="stylesheet" href="css/body.css">
+        <link rel="stylesheet" href="css/form.css">
+        <%- include("partials/header.ejs") %>
+        <title>Login</title>
+
+    </head>
     <body>
-        <h1>Login Page</h1>
+        <%- include("partials/errors.ejs") %>
         <form method="POST" action="/login">
-            Enter Username:<br>
-            <input type="email" name="username" required><br>
-            Enter Password:<br>
-            <input type="password" name="password" required><br>
-            <br>
-            <input type="submit" value="Submit">
+            <label for="username">Username</label>
+            <input type="email" name="username" required>
+            
+            <label for="password">Password</label>
+            <input type="password" name="password" required>
+            
+            <input type="submit" value="Login">
         </form>
     </body>
 </html>

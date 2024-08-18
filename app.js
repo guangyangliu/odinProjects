@@ -6,7 +6,10 @@ const indexRouter = require('./routes/index');
 const session = require('express-session');
 const passport = require('passport');
 const PgStore = require('connect-pg-simple')(session);
+
+
 require('dotenv').config();
+require('./passport');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -34,9 +37,6 @@ app.use(session({
         maxAge: 1000*60*60*24 //1 day
     }
 }));
-
-
-
 
 //passport setup
 require('./passport');

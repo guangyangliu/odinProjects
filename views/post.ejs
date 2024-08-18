@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>New Message</title>
+    <link rel="stylesheet" href="css/body.css">
+    <link rel="stylesheet" href="css/form.css">
+    <%- include("partials/header.ejs") %>
 </head>
 <body>
-    <h1>Create New Message</h1>
     <form action="/post" method="post">
+        <legend><strong>Create New Message</strong></legend>
+
         <label for="title">Title</label>
-        <input type="text" name="title" required><br>
+        <input type="text" name="title" required>
+
         <label for="text">Text</label>
-        <textarea name="text" required></textarea><br>
+        <input type="text" name="text" required>
+
         <input type="submit" value="Submit">
     </form>
 </body>

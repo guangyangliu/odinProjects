@@ -18,9 +18,8 @@ router.get('/join',isLoggedIn,indexController.joinGet);
 
 router.post('/join', isLoggedIn, indexController.joinPost);
 
-router.get('/login', (req, res) => {
-    res.render('login');
-});
+router.get('/login', indexController.loginGet);
+
 
 router.post('/login', indexController.loginPost);
 

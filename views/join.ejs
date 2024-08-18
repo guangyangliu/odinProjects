@@ -1,13 +1,23 @@
 <html>
     <head>
+        <link rel="stylesheet" href="css/body.css">
+        <link rel="stylesheet" href="css/form.css">
+        <%- include("partials/header.ejs") %>
+        <title>Join the club</title>
     </head>
     <body>
-        <h2>Join club, and you can view authors and create posts.</h2>
         <%- include("partials/errors.ejs") %>
         <form action="/join" method="post">
-            <label for="passcode">Passcode:</label>
+            <legend><strong>Join the club</strong>.<br>
+            Member: write anonymous posts, see author of a post<br>
+            Admin: write, see and delete posts.
+            </legend>
+
+            <label for="passcode"><strong>Passcode:</strong></label>
+
             <input type="password" id="passcode" name="passcode">
-            <button type="submit">Join</button>
+
+            <input type="submit" value="Join">
         </form>
     </body>
 </html>

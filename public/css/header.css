@@ -7,24 +7,26 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-#name {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-}
 
 #links {
     display: flex;
     gap: 1rem;
 }
 
-#links a {
+
+a {
     text-decoration: none;
     color: #007bff;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
-#links a:hover {
+a:hover {
     color: #0056b3;
+}
+
+#name a{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
 }
