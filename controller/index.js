@@ -8,10 +8,12 @@ exports.homepage = asyncHandler(async (req, res) => {
     const isLoggedIn = req.isAuthenticated();
     const messages = await model.getMessages();
     let isMember = false;
+    let isAdmin = false;
     if(isLoggedIn){
         isMember = req.user.membership;
+        isAdmin = req.user.admin;
     }
-    res.render('homepage', {isLoggedIn: isLoggedIn, isMember: isMember, messages: messages});
+    res.render('homepage', {messages: messages,isLoggedIn: isLoggedIn, isMember: isMember, isAdmin: isAdmin});
 });
 
 const validateSignup = [
@@ -44,12 +46,16 @@ exports.joinGet = asyncHandler(async (req, res) => {
 exports.joinPost = asyncHandler(async (req, res) => {
     const {passcode} = req.body;
     const {username} = req.user;
-    
-    if(passcode !== process.env.PASSCODE){
+
+    if(passcode !== process.env.MEMBER_PASSCODE && passcode !== process.env.ADMIN_PASSCODE){
         return res.status(400).render('join', {errors: [{msg:'Invalid passcode'}]});
     }
-    
-    await model.changeMembership(username);
+    if(passcode === process.env.ADMIN_PASSCODE){
+        await model.changeStatus(username, true, true);
+    }
+    else{
+        await model.changeStatus(username, true, false);
+    }
     res.redirect('/');
 });
 
@@ -69,3 +75,9 @@ exports.logout = asyncHandler(async (req, res) => {
         res.redirect('/');
     });
 });
+
+exports.deleteMessage = asyncHandler(async(req, res) => {
+    const {id} = req.params;
+    await model.deleteMessage(id);
+    res.redirect('/');
+})

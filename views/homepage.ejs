@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/homepage.css">
     <title>Clubhouse</title>
 </head>
 <body>
@@ -10,7 +11,18 @@
     <div id="content">
         <ul>
             <% messages.forEach(message => { %>
-                <li>Title: <%= message.title %>; Text: <%= message.text %>, <%= isLoggedIn ? 'Author: ' + message.first_name + ' ' + message.last_name : '' %></li>
+                <li>
+                    <div class="messageCard">
+                    <p><strong><%= message.title %></strong></p>
+                    <p><%= message.text %></p>
+                    <% if(isLoggedIn) {%>
+                        <p class="author"> Author: <%= message.first_name %> <%= message.last_name %></p>
+                    <%}%>
+                    <% if(isAdmin) {%>
+                        <a href="/delete/<%= message.id %>">Delete</a>
+                    <%}%>                              
+                    </div>
+                </li>
             <% }) %>
         </ul>
     </div>

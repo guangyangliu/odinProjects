@@ -2,7 +2,9 @@ const {Router} = require('express');
 const router = Router();
 const indexController = require('../controller/index');
 const passport = require('passport');
-const authenticate = require('./authMiddleware');
+const isLoggedIn = require('./authMiddleware').isLoggedIn;
+const isMember = require('./authMiddleware').isMember;
+const isAdmin = require('./authMiddleware').isAdmin;
 
 router.get('/', indexController.homepage);
 
@@ -12,9 +14,9 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', indexController.signupPost);
 
-router.get('/join',authenticate.isLoggedIn,indexController.joinGet);
+router.get('/join',isLoggedIn,indexController.joinGet);
 
-router.post('/join', authenticate.isLoggedIn, indexController.joinPost);
+router.post('/join', isLoggedIn, indexController.joinPost);
 
 router.get('/login', (req, res) => {
     res.render('login');
@@ -22,12 +24,14 @@ router.get('/login', (req, res) => {
 
 router.post('/login', indexController.loginPost);
 
-router.get('/post', authenticate.isLoggedIn, (req, res) => {
+router.get('/post', isMember, (req, res) => {
     res.render('post');
 });
 
-router.post('/post', authenticate.isLoggedIn, indexController.postPost);
+router.post('/post', isMember, indexController.postPost);
 
 router.get('/logout', indexController.logout);
+
+router.get('/delete/:id', isAdmin, indexController.deleteMessage);
 
 module.exports = router;
