@@ -1,7 +1,6 @@
 const {Router} = require('express');
 const router = Router();
 const indexController = require('../controller/index');
-const passport = require('passport');
 const isLoggedIn = require('./authMiddleware').isLoggedIn;
 const isMember = require('./authMiddleware').isMember;
 const isAdmin = require('./authMiddleware').isAdmin;
