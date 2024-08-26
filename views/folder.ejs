@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folder Management</title>
+    <%- include('partials/header.ejs') %>
+</head>
+<body>
+<%- include('partials/error.ejs') %>
+<div>
+    <h2>Create a New Folder</h2>
+    <form action="/folder" method="POST">
+        
+            <label for="folderName">Folder Name:</label>
+            <input type="text" id="folderName" name="folderName" required>
+            <input type="submit" value="Create folder">
+        
+        
+    </form>
+</div>
+<div>
+    <h2>Existing Folders</h2>
+    <ul>
+        <% if (locals.folders && locals.folders.length>0) {%>
+            <% folders.forEach(folder => { %>
+                <li><a href="/folder/<%= folder.folderName %>"><%= folder.folderName %></a> 
+                    <a href="/update/<%= folder.folderName %>"><button>Update</button></a>
+                    <a href="/delete/<%= folder.folderName %>"><button>Delete</button></a>
+            <% }); }%>
+    </ul>
+</div>
+</body>
+</html>

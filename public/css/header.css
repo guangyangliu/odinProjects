@@ -1,0 +1,17 @@
+nav {
+    background-color: #f0f0f0;
+    padding: 20px 0;
+    text-align: center;
+}
+
+nav a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #555;
+}
