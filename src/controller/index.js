@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
 const passport = require('passport');
+const iconv = require('iconv-lite');
+const supabase = require('../config/supabase').supabase;
 
 
 const validateSignup = [
@@ -31,7 +33,7 @@ exports.signupPost = [
         if(err) {
             return next(err);
         }
-        res.redirect('/upload');
+        res.redirect('/');
     })
 })
 ]
@@ -61,8 +63,41 @@ exports.showFolders = asyncHandler(async (req, res) => {
             folderName: true,
         },
     });
-    res.render('folder', { folders: folders });
+    const filesNoFolder = await prisma.File.findMany ({
+        where: {
+            userId: userId,
+            folder: null
+        },
+    })
+    res.render('folder', { folders: folders, files: filesNoFolder});
 });
+exports.showFiles = asyncHandler(async (req, res) => {
+    const { folderName } = req.params;
+    const userId = req.user.id; // Assuming req.user.id is available from the session
+
+    // Find the folder and its files directly
+    const folder = await prisma.Folders.findUnique({
+        where: {
+            folderName_userId: {
+                folderName: folderName,
+                userId: userId
+            }
+        },
+        include: {
+            File: true
+        }
+    });
+
+    if (!folder) {
+        return res.status(404).send('Folder not found');
+    }
+
+    // Files are now directly accessible from the folder object
+    const files = folder.File;
+
+    return res.render('folderFiles', { folderName: folderName, files: files });
+});
+
 
 exports.deleteFolder = asyncHandler(async (req, res) => {
     const { folderName } = req.params;
@@ -103,9 +138,9 @@ exports.updateGet = asyncHandler(async (req, res) => {
 });
 
 exports.updatePost = asyncHandler(async (req, res) => {
-    const { folderName } = req.params;
-    const { folderName: newFolderName } = req.body;
-    const userId = req.user.id; // Assuming req.user.id is available from the session
+        const { folderName } = req.params;
+        const { folderName: newFolderName } = req.body;
+        const userId = req.user.id; // Assuming req.user.id is available from the session
     const folder = await prisma.Folders.update({
         where: {
             folderName_userId: {
@@ -118,19 +153,76 @@ exports.updatePost = asyncHandler(async (req, res) => {
         },
     });
     res.redirect('/folder');
+
+    })
+
+
+
+exports.uploadGet = asyncHandler(async (req, res) => {
+    const { folderName } = req.params;
+    res.render('upload', { folderName });
 });
 
 exports.uploadPost =  asyncHandler(async(req, res) => {
     if (!req.file) {
         return res.status(400).send('Please upload a file!');
     }
-    const { filename, originalname, size } = req.file;
+    const file = req.file;
+    const {folderName} = req.params;
+    const fileName = iconv.decode(Buffer.from(file.originalname, 'binary'), 'utf-8');
+    const userId = req.user.id;
+
+    const fileData = {
+        originalname: fileName,
+        size: file.size,
+        user:  {connect: { id: userId }} 
+    }
+    if(folderName) {
+        fileData.folder = {
+            connect: {folderName_userId: {
+                folderName: folderName,
+                userId: userId
+            } }
+        }
+    }
     const newFile = await prisma.File.create({
-        data: {
-            fileName: filename,
-            originalFileName: originalname,
-            size: size,
-        },
+        data: fileData
     });
-    res.status(201).send(`File uploaded successfully: ${originalname}`);
+
+    const { data, error } = await supabase.storage.from('files').upload(`${newFile.id}`, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
+
+  if (error) {
+    throw new Error(`Upload error: ${error.message}`); // Improved error message
+  };
+    res.redirect('/folder');
+});
+
+
+exports.downloadFile = asyncHandler(async (req, res) => {
+    const { fileId } = req.params;
+    const { data, error } = await supabase.storage.from('files').download(fileId);
+
+    if (error) {
+        throw new Error(`Download error: ${error.message}`);
+    }
+    const file = await prisma.File.findUnique({
+        where: {
+            id: parseInt(fileId)
+        },
+        select: {
+            originalname: true
+        }
+    });
+
+    if (!file) {
+        throw new Error(`File with ID ${fileId} not found.`);
+    }
+
+    // Sanitize the filename
+    const sanitizedFilename = encodeURIComponent(file.originalname);
+    res.setHeader('Content-Disposition', `attachment; filename="${sanitizedFilename}"`);
+    res.send(data);
 });

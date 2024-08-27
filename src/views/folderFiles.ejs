@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Details</title>
+</head>
+<body>
+<%- include('partials/error.ejs') %>
+<div>
+    <h2>Files in <%= folderName %></h2>
+    <a href="/upload/<%= folderName %>"><button>Upload File</button></a>
+    <table>
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th>Size</th>
+                <th>Upload Time</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (locals.files && locals.files.length > 0) { %>
+                <% files.forEach(file => { %>
+                    <tr>
+                        <td><%= file.originalname %></td>
+                        <td><%= file.size %></td>
+                        <td><%= file.uploadAt %></td>
+                        <td><a href="/download/<%= file.id %>"><button>Download</button></a></td>
+                    </tr>
+                <% }); } else { %>
+                    <tr>
+                        <td colspan="4">No files in this folder.</td>
+                    </tr>
+                <% } %>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

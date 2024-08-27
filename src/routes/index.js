@@ -1,9 +1,8 @@
 const { Router } = require("express");
 const router = Router();
 const controller = require('../controller/index');
+const upload = require('../config/multer').upload;
 
-const multer = require('multer');
-const upload = multer({dest: 'uploads/'});
 
 router.get('/signup', (req, res) => res.render('signup'));
 router.post('/signup',controller.signupPost);
@@ -19,19 +18,23 @@ const isLoggedIn = (req, res, next) => {
     }
   };
 
-router.get('/upload', isLoggedIn, (req, res) => res.render('upload'));
 
-router.post('/upload',controller.uploadPost);
+router.get('/upload/:folderName?', isLoggedIn, controller.uploadGet);
+
+router.post('/upload/:folderName?',upload.single('file'),controller.uploadPost);
 
 router.get('/folder', controller.showFolders);
+router.get('/', controller.showFolders);
 
 router.post('/folder', controller.createFolder);
 
 router.get('/delete/:folderName', controller.deleteFolder);
 
-
-
+router.get('/folder/:folderName', controller.showFiles);
 router.get('/update/:folderName', controller.updateGet);
-router.post('/update/:folderName', upload.single('file'), controller.updatePost);
+router.post('/update/:folderName', controller.updatePost);
+
+
+router.get('/download/:fileId', controller.downloadFile);
 
 module.exports = router;

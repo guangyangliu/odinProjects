@@ -8,7 +8,7 @@
 </head>
 <body>
 <%- include('partials/error.ejs') %>
-<form action="/upload" method="POST" enctype="multipart/form-data">
+<form action="/upload/<%= folderName %>" method="POST" enctype="multipart/form-data">
         <label for="file">Select a file:</label>
         <input type="file" id="file" name="file" required>
         <input type="submit" value="Upload">

@@ -25,6 +25,7 @@ model User {
   username String    @unique
   password String
   Folders  Folders[]
+  File     File[]
 }
 
 model Folders {
@@ -38,11 +39,14 @@ model Folders {
 }
 
 model File {
-  id       Int      @id @default(autoincrement())
-  fileName String
-  size     Int
-  uploadAt DateTime @default(now())
-  folder   Folders  @relation(fields: [folderId], references: [id])
-  folderId Int
-  @@unique([folderName, folderId])
+  id           Int      @id @default(autoincrement())
+  originalname String
+  size         Int
+  uploadAt     DateTime @default(now())
+  folder       Folders? @relation(fields: [folderId], references: [id])
+  folderId     Int?
+  user         User?     @relation(fields: [userId], references: [id])
+  userId       Int?
+
+  @@unique([originalname, folderId])
 }
