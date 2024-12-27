@@ -1,0 +1,12 @@
+.Nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    background-color: rgb(25, 25, 25);
+    padding: 20px;
+}
+
+.link {
+    color: rgb(200, 200, 200);
+    text-decoration: none;
+}
