@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "date-fns": "^3.6.0",
+    "webpack-config": "^7.5.0"
+  }
+}
