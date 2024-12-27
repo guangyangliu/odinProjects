@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Folder Name</title>
+    <%- include('partials/header.ejs') %>
+</head>
+<body>
+<%- include('partials/error.ejs') %>
+<div>
+    <h2>Update Folder Name</h2>
+    <form action="/update/<%= folder.folderName %>" method="POST">
+        <div>
+            <label for="folderName">New Folder Name:</label>
+            <input type="text" id="folderName" name="folderName" value="<%= folder.folderName %>" required>
+        </div>
+        <button type="submit">Update</button>
+    </form>
+</div>
+</body>
+</html>
