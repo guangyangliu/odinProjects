@@ -1,0 +1,25 @@
+#header {
+    display: flex;
+    justify-content:left;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+    width: 100%;
+    gap: 20px;
+}
+
+#brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}   
+
+#links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
