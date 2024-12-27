@@ -1,0 +1,30 @@
+
+#generateButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.coloumnDiv {
+    width: 10px;
+    height: 10px;
+    border: 1px solid rgb(207, 204, 204);
+}
+
+.rowDiv {
+    display: flex;
+    flex: 1;
+    margin: 0 auto;
+}
+
+.grid {
+    max-width: 1000px;
+    max-height: 1000px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+    align-items: center;
+}

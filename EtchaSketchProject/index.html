@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="generateButton"><button>GenerateNewGrid</button></div>
+    <div class="grid"></div>
+
+</body>
+<script>
+    let gridContainer = document.querySelector(".grid");
+    let body = document.querySelector("body");
+
+    function generateGrid(sideNumber) {
+        if(sideNumber<1) {
+            console.log("sideNumber can't less than 1.");
+            return;
+        }
+        if (sideNumber>100) {
+            sideNumber = 100;
+        }
+        generateGridContainer();
+        hoverSetup();
+        for(let row=1; row<=sideNumber; row++) {
+        let rowDiv = document.createElement("div");
+        rowDiv.classList.add("rowDiv");
+        gridContainer.appendChild(rowDiv);
+        for(let coloumn=1; coloumn<=sideNumber; coloumn++) {
+            let coloumnDiv = document.createElement("div");
+            coloumnDiv.classList.add("coloumnDiv");
+            rowDiv.appendChild(coloumnDiv);
+        }
+    }
+    }
+
+    function generateGridContainer() {
+        gridContainer.remove();
+        gridContainer = document.createElement("div");
+        gridContainer.classList.add("grid");
+        body.appendChild(gridContainer);
+    }
+
+    function hoverSetup() {
+        gridContainer.addEventListener('mouseover', (event)=> {
+        let target = event.target;
+        if (target.classList.contains("coloumnDiv")) {
+            target.style.backgroundColor = "red";
+        }
+    });
+    }    
+
+    let generateButton = document.querySelector("#generateButton");
+    generateButton.addEventListener('click', ()=> {
+        let input = prompt('enter the number of squares per side(no more than 1000)');
+        let sideNumber = parseInt(input);
+        generateGrid(sideNumber);
+    });
+    
+</script>
+</html>
