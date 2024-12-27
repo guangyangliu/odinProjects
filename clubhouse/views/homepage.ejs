@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/homepage.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="css/body.css">
+    
+    <title>Clubhouse</title>
+
+    <div id="header">
+        <div id="name"><a href="/">Clubhouse</a></div>
+        <div id="links">
+           <% if (locals.isLoggedIn) { %>
+            <a href="/join">JoinClub</a>
+            <a href="/post">CreatePost</a>
+            <a href="/logout">Logout</a>
+            <% } else { %>
+                <a href="/signup">Sign Up</a>
+                <a href="/login">Login</a>
+            <% } %>
+        </div>
+    </div>
+</head>
+
+<body>
+    <div id="content">
+        <ul>
+            <% messages.forEach(message => { %>
+                <li>
+                    <div class="messageCard">
+                    <p><strong><%= message.title %></strong></p>
+                    <p><%= message.text %></p>
+                    <% if(isLoggedIn) {%>
+                        <p class="author"> Author: <%= message.first_name %> <%= message.last_name %></p>
+                    <%}%>
+                    <% if(isAdmin) {%>
+                        <a href="/delete/<%= message.id %>">Delete</a>
+                    <%}%>                              
+                    </div>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+</body>
+</html>
