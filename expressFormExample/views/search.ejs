@@ -1,0 +1,17 @@
+<% user %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+</head>
+<body>
+  <h1><%= title %></h1>
+    <% if (user) {%>
+        <div>ID: <%= user.id %>, Name: <%= user.firstName %> <%= user.lastName %> 
+        Email: <%= user.email %>, Age: <%= user.age %>, Bio: <%= user.bio %></div>
+    <% } else {%>
+        <div>Can't find the user.</div>
+    <%}%> 
+  <a href="/create">Create a user</a>
+</body>
+</html>
