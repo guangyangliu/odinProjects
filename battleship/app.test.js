@@ -1,4 +1,5 @@
 import { Ship, Gameboard, Player} from "./src/modules";
+import {Game} from "./src/app";
 
 
 test('Ship length', () => {
@@ -131,4 +132,15 @@ test('Player', () => {
     expect(computer.gameboard.board.length).toBe(10);
     expect(human.isReal).toBe(true);
     expect(computer.isReal).toBe(false);
+})
+
+
+test('create 2 palyers and plceships for them', () => {
+    const human = new Player('human');
+    const computer = new Player('computer', false);
+    const game = new Game(human, computer);
+    game.placeShips(human);
+    game.placeShips(computer);
+    expect(human.gameboard.ships.length).toBe(5);
+    expect(computer.gameboard.ships.length).toBe(5);
 })
