@@ -56,19 +56,16 @@ Gameboard.prototype = {
     receiveAttack: function(x, y) {
         if (x < 0 || x >= 10 || y < 0 || y >= 10) return false;
         
-        const target = this.board[y][x];
-        if (target === null) {
-            this.missedAttacks.push([x, y]);
-            return true;
-        }
-        
-        if (target.ship) {
-            target.ship.hit();
+        const positon = this.board[y][x];
+    
+        if (positon.ship) {
+            positon.ship.hit();
             this.hitedAttacks.push([x, y]);
-            return true;
+        } else {
+            this.missedAttacks.push([x, y]);
         }
         
-        return false;
+        return true;
     },
     
     allShipsSunk: function() {

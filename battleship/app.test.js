@@ -1,5 +1,5 @@
-import expect from "expect";
 import { Ship, Gameboard} from "./src/modules";
+
 
 test('Ship length', () => {
     expect(new Ship(3).length).toBe(3);
@@ -88,6 +88,17 @@ test('placeship: if a ship is placed', ()=> {
 })
 
 
+test('test recieveAttack and if it can call hit function on thie ship or track attacks', ()=> {
+    let gameBoard = new Gameboard();
+    let ship = new Ship(5);
+    gameBoard.placeShip(ship, 0, 0, false);
+    expect(gameBoard.receiveAttack(5,0)).toBe(true);
+    expect(ship.hits).toBe(0);
+    expect(gameBoard.missedAttacks).toContainEqual([5,0]);
+    expect(gameBoard.receiveAttack(4,0)).toBe(true);
+    expect(ship.hits).toBe(1);
+    expect(gameBoard.hitedAttacks).toContainEqual([4,0]);
+})
 
 
 
