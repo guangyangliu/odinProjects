@@ -1,7 +1,6 @@
 import { Ship, Gameboard, Player} from "./src/modules";
 import {Game} from "./src/app";
 
-
 test('Ship length', () => {
     expect(new Ship(3).length).toBe(3);
     expect(new Ship(0).length).toBe(0);
@@ -101,6 +100,16 @@ test('test recieveAttack and if it can call hit function on thie ship or track a
     expect(gameBoard.hitedAttacks).toContainEqual([4,0]);
 })
 
+
+test('if a position is attacked before', () => {
+    let gameBoard = new Gameboard();
+    gameBoard.missedAttacks.push([0,0]);
+    expect(gameBoard.isAttacked(0,0)).toBe(true);
+    expect(gameBoard.isAttacked(1,1)).toBe(false);
+    gameBoard.hitedAttacks.push([1,1]);
+    expect(gameBoard.isAttacked(1,1)).toBe(true);
+
+})
 
 test('test if all ships sunk', ()=> {
     let gameBoard = new Gameboard();

@@ -51,11 +51,14 @@ Game.prototype = {
         td.setAttribute('data-y', y);
 
         tr.appendChild(td);
-        td.textContent = gameboard[y][x].ship == null ? '' : "ship";
+
+        //td.textContent = gameboard[y][x].ship == null ? '' : "ship";
       }
     }
   },
   render: function(player) {
+    document.getElementById('gameInfo').textContent = `GameInfo:
+    Who's turn: ${this.currentPlayer.name}`
     const {missedAttacks, hitedAttacks} = player.gameboard;
     let boardDiv = document.getElementById(player.name);
     missedAttacks.forEach(postion => {
@@ -68,18 +71,28 @@ Game.prototype = {
       td.classList.add('hited');
     });
   },
+
   attackEvent: function(player) {
-    if(this.isGameStart) {
-      if(this.currentPlayer !== player) {
-        let board = document.getElementById(player.name);
+    let board = document.getElementById(player.name);
+
         board.addEventListener('click', (e) => {
           let target = e.target;
           let x = target.dataset.x
           let y = target.dataset.y;
-          console.log(`x${x}y${y}`);
+          if(this.currentPlayer !== player) {
+            if(!player.gameboard.isAttacked(x,y)) {
+              player.gameboard.receiveAttack(x,y);
+
+              let tempPlayer = this.currentPlayer;
+              this.currentPlayer = this.nextPlayer;
+              this.nextPlayer = tempPlayer;
+              this.render(player);
+            }
+
+          }
+          
         })
-      }
-    }
+    
   }
 
 }
@@ -95,13 +108,15 @@ function setGame() {
   game.display(human, "board-one");
   game.placeShips(computer);
   game.display(computer, "board-two");
-  human.gameboard.missedAttacks.push([0,0]);
-  human.gameboard.hitedAttacks.push([1,1]);
   game.render(human);
-  game.attackEvent(computer);
+  game.attackEvent(game.playerOne);
+  game.attackEvent(game.playerTwo);
 };
 
+
+
 setGame();
+
 
 
 

@@ -70,6 +70,12 @@ Gameboard.prototype = {
     
     allShipsSunk: function() {
         return this.ships.every(ship => ship.isSunk());
+    },
+
+    isAttacked: function(x, y) {
+        return [...this.missedAttacks, ...this.hitedAttacks].some(
+            (position) => position[0] === x && position[1] === y
+        );
     }
 }
 
