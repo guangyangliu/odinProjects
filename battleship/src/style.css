@@ -15,9 +15,9 @@ td {
 
 
 .hited {
-
+    background-color: red;
 }
 
 .missed {
-    
+    background-color: gray;
 }

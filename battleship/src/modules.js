@@ -13,7 +13,7 @@ Ship.prototype = {
 export function Gameboard() {
     this.board = Array(10).fill().map(() => Array(10).fill().map(()=>({
         ship: null,
-        attacked: false
+        attacked: false,
     })));
     this.ships = [];
     this.missedAttacks = [];
@@ -45,7 +45,7 @@ Gameboard.prototype = {
             }
 
             for(let i = 0; i < ship.length; i++) {
-                this.board[y][x+i].ship = ship;
+                this.board[y][x+i].ship = ship;                
             }
 
         }
