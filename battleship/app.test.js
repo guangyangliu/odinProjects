@@ -1,3 +1,4 @@
+import expect from "expect";
 import { Ship, Gameboard} from "./src/modules";
 
 
@@ -98,6 +99,28 @@ test('test recieveAttack and if it can call hit function on thie ship or track a
     expect(gameBoard.receiveAttack(4,0)).toBe(true);
     expect(ship.hits).toBe(1);
     expect(gameBoard.hitedAttacks).toContainEqual([4,0]);
+})
+
+
+test('test if all ships sunk', ()=> {
+    let gameBoard = new Gameboard();
+    let shipA = new Ship(2);
+    let shipB = new Ship(3);
+    gameBoard.placeShip(shipA, 0, 0, false);
+    gameBoard.placeShip(shipB, 0, 1, false);
+    expect(shipA.isSunk()).toBe(false);
+    expect(shipB.isSunk()).toBe(false);
+    expect(gameBoard.allShipsSunk()).toBe(false);
+    
+    gameBoard.receiveAttack(0,0);
+    gameBoard.receiveAttack(1,0);
+    expect(shipA.isSunk()).toBe(true);
+
+    gameBoard.receiveAttack(0,1);
+    gameBoard.receiveAttack(1,1);
+    gameBoard.receiveAttack(2,1);
+    expect(shipB.isSunk()).toBe(true);
+    expect(gameBoard.allShipsSunk()).toBe(true);
 })
 
 
