@@ -1,2 +1,2 @@
 import './style.css';
-import './game.js';
+import './app.js';
