@@ -29,3 +29,11 @@ test('Ship was sunk.', () => {
     expect(ship.isSunk()).toBe(true);
 })
 
+test('Game board is 10*10 grid', ()=> {
+    let gameBoard = new Gameboard();
+    expect(gameBoard.board.length).toBe(10);
+    expect(gameBoard.board[0].length).toBe(10);
+    expect(gameBoard.board[9].length).toBe(10);
+})
+
+

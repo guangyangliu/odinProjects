@@ -1,0 +1,14 @@
+table {
+ border-collapse: collapse;
+}
+
+td {
+    border: 1px solid gray;
+    width: 30px;
+    height: 30px;
+}
+
+#boardContainer {
+    display: flex;
+    gap: 30px;
+}
