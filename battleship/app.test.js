@@ -1,5 +1,4 @@
-import expect from "expect";
-import { Ship, Gameboard} from "./src/modules";
+import { Ship, Gameboard, Player} from "./src/modules";
 
 
 test('Ship length', () => {
@@ -111,7 +110,7 @@ test('test if all ships sunk', ()=> {
     expect(shipA.isSunk()).toBe(false);
     expect(shipB.isSunk()).toBe(false);
     expect(gameBoard.allShipsSunk()).toBe(false);
-    
+
     gameBoard.receiveAttack(0,0);
     gameBoard.receiveAttack(1,0);
     expect(shipA.isSunk()).toBe(true);
@@ -125,3 +124,11 @@ test('test if all ships sunk', ()=> {
 
 
 
+test('Player', () => {
+    let human = new Player('human');
+    let computer = new Player('computer', false);
+    expect(human.gameboard.board.length).toBe(10);
+    expect(computer.gameboard.board.length).toBe(10);
+    expect(human.isReal).toBe(true);
+    expect(computer.isReal).toBe(false);
+})

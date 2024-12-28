@@ -73,8 +73,8 @@ Gameboard.prototype = {
     }
 }
 
-export function Player(name, isComputer = false) {
+export function Player(name, isReal = true) {
     this.name = name;
     this.gameboard = new Gameboard();
-    this.isComputer = isComputer;
+    this.isReal = isReal;
 }
