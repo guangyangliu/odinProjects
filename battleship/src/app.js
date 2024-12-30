@@ -7,18 +7,19 @@ export function Game(playerOne, playerTwo) {
   this.playerTwo = playerTwo;
   this.currentPlayer = playerOne;
   this.nextPlayer = playerTwo;
-  this.isGameStart = true;
+  this.gameStatus = true;
 }
 
 Game.prototype = {
   constructor: Game,
   placeShips: function (player) {
     let gameboard = player.gameboard;
+    /*
     gameboard.placeShip(new Ship(5), 3, 3);
     gameboard.placeShip(new Ship(4), 2, 4, true);
-    gameboard.placeShip(new Ship(3), 0, 0);
-    gameboard.placeShip(new Ship(2), 5, 7, true);
-    gameboard.placeShip(new Ship(1), 1, 1, true);
+    gameboard.placeShip(new Ship(3), 1, 1);
+    gameboard.placeShip(new Ship(2), 5, 7, true);*/
+    gameboard.placeShip(new Ship(1), 0, 0, true);
   },
 
   display: function (player) {
@@ -57,8 +58,12 @@ Game.prototype = {
     }
   },
   render: function(player) {
-    document.getElementById('gameInfo').textContent = `GameInfo:
-    Who's turn: ${this.currentPlayer.name}`
+    document.getElementById('gameInfo').innerHTML = 
+    `<strong>Game Info:</strong>
+    <p>Who's turn: ${this.currentPlayer.name}</span></p>
+    <p>${this.gameStatus ? "" : `Winner: ${this.nextPlayer.name}`}</p>
+    `;
+
     const {missedAttacks, hitedAttacks} = player.gameboard;
     let boardDiv = document.getElementById(player.name);
     missedAttacks.forEach(postion => {
@@ -76,9 +81,11 @@ Game.prototype = {
     let board = document.getElementById(player.name);
 
         board.addEventListener('click', (e) => {
+
           let target = e.target;
           let x = target.dataset.x
           let y = target.dataset.y;
+          if(this.gameStatus) {
           if(this.currentPlayer !== player) {
             if(!player.gameboard.isAttacked(x,y)) {
               player.gameboard.receiveAttack(x,y);
@@ -86,10 +93,14 @@ Game.prototype = {
               let tempPlayer = this.currentPlayer;
               this.currentPlayer = this.nextPlayer;
               this.nextPlayer = tempPlayer;
+              if(player.gameboard.allShipsSunk()) {
+                this.gameStatus = false;
+              }
               this.render(player);
             }
 
           }
+        }
           
         })
     
@@ -98,8 +109,9 @@ Game.prototype = {
 }
 
 
-
-function setGame() {
+function startGame() {
+  const boardContainer = document.getElementById('boardContainer');
+  boardContainer.innerHTML = '';
   const human = new Player('human');
   const computer = new Player('computer');
 
@@ -114,8 +126,13 @@ function setGame() {
 };
 
 
+const button = document.querySelector('button');
+    button.addEventListener('click', ()=> {
+      startGame();
+    })
 
-setGame();
+
+
 
 
 
