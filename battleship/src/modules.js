@@ -64,7 +64,6 @@ Gameboard.prototype = {
         } else {
             this.missedAttacks.push([x, y]);
         }
-        
         return true;
     },
     

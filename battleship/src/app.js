@@ -18,9 +18,22 @@ Game.prototype = {
     gameboard.placeShip(new Ship(5), 3, 3);
     gameboard.placeShip(new Ship(4), 2, 4, true);
     gameboard.placeShip(new Ship(3), 1, 1);
-    gameboard.placeShip(new Ship(2), 5, 7, true);*/
-    
-    gameboard.placeShip(new Ship(1), 0, 0, true);
+    gameboard.placeShip(new Ship(2), 5, 7, true);
+    gameboard.placeShip(new Ship(1), 0, 0, true);*/
+    randomPlaceShip(gameboard, new Ship(5));
+    randomPlaceShip(gameboard, new Ship(4));
+    randomPlaceShip(gameboard, new Ship(3));
+    randomPlaceShip(gameboard, new Ship(2));
+    randomPlaceShip(gameboard, new Ship(1));
+
+    function randomPlaceShip (gameBoard, ship) {
+      while(!gameBoard.ships.includes(ship)) {
+        let x = Math.floor(Math.random()*10);
+        let y = Math.floor(Math.random()*10);
+        let pointer = Math.random() < 0.5 ? true : false;
+        gameBoard.placeShip(ship, x, y, pointer);
+      }
+    }
   },
 
   displayBoards: function () {
@@ -36,7 +49,7 @@ Game.prototype = {
   
       //show player's name in the board.
       const name = document.createElement("p");
-      name.textContent = `Player: ${player.name}`;
+      name.textContent = `Board: ${player.name}`;
       board.appendChild(name);
   
       //create a table to represent the board.
@@ -66,7 +79,6 @@ Game.prototype = {
   render: function() {
     document.getElementById('gameInfo').innerHTML = 
     `<strong>Game Info:</strong>
-    <p>Who's turn: ${this.currentPlayer.name}</span></p>
     <p>${this.gameStatus ? "" : `Winner: ${this.currentPlayer.name}`}</p>
     `;
 
