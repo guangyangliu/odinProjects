@@ -17,8 +17,9 @@ Game.prototype = {
     /*
     gameboard.placeShip(new Ship(5), 3, 3);
     gameboard.placeShip(new Ship(4), 2, 4, true);
-    gameboard.placeShip(new Ship(3), 1, 1);;*/
-    gameboard.placeShip(new Ship(2), 5, 7, true);
+    gameboard.placeShip(new Ship(3), 1, 1);
+    gameboard.placeShip(new Ship(2), 5, 7, true);*/
+    
     gameboard.placeShip(new Ship(1), 0, 0, true);
   },
 
@@ -66,7 +67,7 @@ Game.prototype = {
     document.getElementById('gameInfo').innerHTML = 
     `<strong>Game Info:</strong>
     <p>Who's turn: ${this.currentPlayer.name}</span></p>
-    <p>${this.gameStatus ? "" : `Winner: ${this.nextPlayer.name}`}</p>
+    <p>${this.gameStatus ? "" : `Winner: ${this.currentPlayer.name}`}</p>
     `;
 
     function renderPlayer (player) {
@@ -89,35 +90,51 @@ Game.prototype = {
   attackEvent: function(player) {
     let game = this;
     //computer attack
-    function randomPlay () {
+    
+    function randomPlay (player) {
       let x = Math.floor(Math.random()*10);
       let y = Math.floor(Math.random()*10);
 
-      while(game.nextPlayer.gameboard.isAttacked(x, y)) {
+      while(player.gameboard.isAttacked(x, y)) {
         x = Math.floor(Math.random()*10);
         y = Math.floor(Math.random()*10);
       }
-      attack(x, y);
-      console.log(game.playerOne.gameboard.missedAttacks);
-      console.log(game.playerTwo.gameboard.missedAttacks);
+
+      player.gameboard.receiveAttack(x, y);
+      if(player.gameboard.allShipsSunk()) {
+        game.gameStatus = false;
+      } else {
+        changePlayer();
+      }
+      
+      console.log(player.gameboard.missedAttacks);
+      console.log(player.gameboard.missedAttacks);
+    }
+
+    function changePlayer() {
+      let tempPlayer = game.currentPlayer;
+      game.currentPlayer = game.nextPlayer;
+      game.nextPlayer = tempPlayer;
     }
 
     let board = document.getElementById(player.name);
     // human attack
-
+    console.log(player.isReal);
+    
+    if(player.isReal) return;
     board.addEventListener('click', (e) => {
       let target = e.target;
       let x = target.dataset.x
       let y = target.dataset.y;
       if(!game.gameStatus) return;
-      if(game.currentPlayer !== player) return;
+      if(game.currentPlayer == player) return;
       if(!player.gameboard.isAttacked(x,y)) {
         player.gameboard.receiveAttack(x,y);
-        let tempPlayer = game.currentPlayer;
-        game.currentPlayer = game.nextPlayer;
-        game.nextPlayer = tempPlayer;
         if(player.gameboard.allShipsSunk()) {
           game.gameStatus = false;
+        } else {
+          changePlayer();
+          randomPlay(game.nextPlayer);
         }
         game.render();
       }
@@ -132,7 +149,7 @@ function startGame() {
   const boardContainer = document.getElementById('boardContainer');
   boardContainer.innerHTML = '';
   const human = new Player('human');
-  const computer = new Player('computer');
+  const computer = new Player('computer', false);
 
   const game = new Game(human, computer);
   game.placeShips(human);
