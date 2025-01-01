@@ -49,18 +49,18 @@ test('placeship: coordinate add length should less than 10', ()=> {
 
 test('placeship: if a cell is occupied, the ship cannot be placed there', ()=> {
     let gameBoard = new Gameboard();
-    gameBoard.board[5][5].ship = true;
+    gameBoard.board[5][5] = new Ship(1);
     expect(gameBoard.placeShip(new Ship(6), 0, 5, false)).toBe(false);
     expect(gameBoard.placeShip(new Ship(5), 0, 5, false)).toBe(true);
     expect(gameBoard.placeShip(new Ship(1), 5, 5, false)).toBe(false);
 
     //test vertical placeship
-    gameBoard.board[1][0].ship = true;
+    gameBoard.board[1][0] = new Ship(1);
     expect(gameBoard.placeShip(new Ship(2), 0, 0, true)).toBe(false);
 
     //test horizonal placeship
-    gameBoard.board[7][6].ship = true;
-    gameBoard.board[7][7].ship = true;
+    gameBoard.board[7][6] = new Ship(1);
+    gameBoard.board[7][7] = new Ship(1);
     expect(gameBoard.placeShip(new Ship(2), 6, 7, false)).toBe(false);
     expect(gameBoard.placeShip(new Ship(2), 7, 7, false)).toBe(false);
 })
@@ -69,22 +69,22 @@ test('placeship: if a cell is occupied, the ship cannot be placed there', ()=> {
 
 test('placeship: if a ship is placed', ()=> {
     let gameBoard = new Gameboard();
-    expect(gameBoard.board[5][0].ship).toBe(null);
+    expect(gameBoard.board[5][0]).toBe(null);
     let shipA = new Ship(5);
-    expect(gameBoard.board[5][0].ship).toBe(null);
+    expect(gameBoard.board[5][0]).toBe(null);
 
     expect(gameBoard.placeShip(shipA, 5, 6, false)).toBe(false);
-    expect(gameBoard.board[5][0].ship).toBe(null);
-    expect(gameBoard.board[5][6].ship).toBe(null);
+    expect(gameBoard.board[5][0]).toBe(null);
+    expect(gameBoard.board[5][6]).toBe(null);
 
     expect(gameBoard.placeShip(shipA, 5, 5, false)).toBe(true);
 
-    expect(gameBoard.board[5][5].ship).toBe(shipA);
-    expect(gameBoard.board[5][9].ship).toBe(shipA);
-    expect(gameBoard.board[5][0].ship).toBe(null);
-    expect(gameBoard.board[5][4].ship).toBe(null);
-    expect(gameBoard.board[5][1].ship).toBe(null);
-    expect(gameBoard.board[4][5].ship).toBe(null);
+    expect(gameBoard.board[5][5]).toBe(shipA);
+    expect(gameBoard.board[5][9]).toBe(shipA);
+    expect(gameBoard.board[5][0]).toBe(null);
+    expect(gameBoard.board[5][4]).toBe(null);
+    expect(gameBoard.board[5][1]).toBe(null);
+    expect(gameBoard.board[4][5]).toBe(null);
 })
 
 
@@ -148,8 +148,7 @@ test('create 2 palyers and plceships for them', () => {
     const human = new Player('human');
     const computer = new Player('computer', false);
     const game = new Game(human, computer);
-    game.placeShips(human);
-    game.placeShips(computer);
+    game.placeShips();
     expect(human.gameboard.ships.length).toBe(5);
     expect(computer.gameboard.ships.length).toBe(5);
 })

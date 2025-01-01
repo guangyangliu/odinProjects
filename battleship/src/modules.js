@@ -11,10 +11,7 @@ Ship.prototype = {
 
 
 export function Gameboard() {
-    this.board = Array(10).fill().map(() => Array(10).fill().map(()=>({
-        ship: null,
-        attacked: false,
-    })));
+    this.board = Array(10).fill().map(() => Array(10).fill(null));
     this.ships = [];
     this.missedAttacks = [];
     this.hitedAttacks = [];
@@ -32,20 +29,20 @@ Gameboard.prototype = {
         //if a cell is occupied, then the ship can't be placed.
         if(isVertical) {
             for(let i = 0; i < ship.length; i++) {
-                if(this.board[y+i][x].ship) return false;
+                if(this.board[y+i][x]) return false;
             }
 
             for(let i = 0; i < ship.length; i++) {
-                this.board[y+i][x].ship = ship;
+                this.board[y+i][x] = ship;
             }
             
         } else {
             for(let i = 0; i < ship.length; i++) {
-                if(this.board[y][x+i].ship) return false;
+                if(this.board[y][x+i]) return false;
             }
 
             for(let i = 0; i < ship.length; i++) {
-                this.board[y][x+i].ship = ship;                
+                this.board[y][x+i] = ship;                
             }
 
         }
@@ -56,10 +53,10 @@ Gameboard.prototype = {
     receiveAttack: function(x, y) {
         if (x < 0 || x >= 10 || y < 0 || y >= 10) return false;
         
-        const positon = this.board[y][x];
+        const ship = this.board[y][x];
     
-        if (positon.ship) {
-            positon.ship.hit();
+        if (ship) {
+            ship.hit();
             this.hitedAttacks.push([x, y]);
         } else {
             this.missedAttacks.push([x, y]);

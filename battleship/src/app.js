@@ -12,20 +12,16 @@ export function Game(playerOne, playerTwo) {
 
 Game.prototype = {
   constructor: Game,
-  placeShips: function (player) {
+  placeShips: function () {
+    randomPlaceShips(this.playerOne);
+    randomPlaceShips(this.playerTwo);
+    function randomPlaceShips(player) {
     let gameboard = player.gameboard;
-    /*
-    gameboard.placeShip(new Ship(5), 3, 3);
-    gameboard.placeShip(new Ship(4), 2, 4, true);
-    gameboard.placeShip(new Ship(3), 1, 1);
-    gameboard.placeShip(new Ship(2), 5, 7, true);
-    gameboard.placeShip(new Ship(1), 0, 0, true);*/
     randomPlaceShip(gameboard, new Ship(5));
     randomPlaceShip(gameboard, new Ship(4));
     randomPlaceShip(gameboard, new Ship(3));
     randomPlaceShip(gameboard, new Ship(2));
     randomPlaceShip(gameboard, new Ship(1));
-
     function randomPlaceShip (gameBoard, ship) {
       while(!gameBoard.ships.includes(ship)) {
         let x = Math.floor(Math.random()*10);
@@ -34,6 +30,7 @@ Game.prototype = {
         gameBoard.placeShip(ship, x, y, pointer);
       }
     }
+  }
   },
 
   displayBoards: function () {
@@ -99,7 +96,7 @@ Game.prototype = {
     renderPlayer (this.playerTwo);
   },
 
-  attackEvent: function(player) {
+  boardAttackEvent: function(player) {
     let game = this;
     //computer attack
     
@@ -160,23 +157,24 @@ Game.prototype = {
 function startGame() {
   const boardContainer = document.getElementById('boardContainer');
   boardContainer.innerHTML = '';
+
   const human = new Player('human');
   const computer = new Player('computer', false);
-
   const game = new Game(human, computer);
-  game.placeShips(human);
-  game.placeShips(computer);
+
+  game.placeShips();
   game.displayBoards();
   game.render();
-  game.attackEvent(game.playerOne);
-  game.attackEvent(game.playerTwo);
+  game.boardAttackEvent(game.playerOne);
+  game.boardAttackEvent(game.playerTwo);
 };
 
+/*
 const button = document.querySelector('button');
     button.addEventListener('click', ()=> {
       startGame();
     })
-
+*/
 
 
 
