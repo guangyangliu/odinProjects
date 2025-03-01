@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", "Playfair Display", serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+#introduction {
+    display: flex;
+    background-color: lightblue;
+    padding: 24px;
+}
+
+
+img {
+    max-height: 300px;
+    object-fit: cover;
+}
+
+#about {
+    width: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#myWork {
+    padding: 24px;
+
+}
+.projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.project {
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.screenshot {
+    height: 200px;
+    background-color: lightblue;
+    margin-bottom: 8px;
+}
+
+#contact {
+    display: flex;
+    justify-content: space-between;
+    background-color: lightblue;
+    padding: 24px;
+}
+
+#contact p {
+    color: white;
+}
+
+
+
+
+
+/* Responsive Adjustments (Media Queries) */
+@media (max-width: 768px) {
+    #introduction, #contact {
+        flex-direction: column;
+    }
+    img {  
+        object-fit: cover;
+    }
+    p, .title {
+        text-align: center;
+    }
+}
