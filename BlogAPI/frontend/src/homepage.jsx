@@ -1,6 +1,6 @@
-
 import {useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+const apiUrl = import.meta.env.VITE_BACKEND_API_URL;
 
 function HomePage () {
     const [log, setLog] = useState(false);
@@ -8,7 +8,7 @@ function HomePage () {
 
     useEffect(() => {
         async function fetchUser() {
-            fetch("http://localhost:3001/homepage", {
+            fetch(`${apiUrl}/homepage`, {
             headers: {
                 "Content-Type": "application/json",
                 authorization: `Bearer ${localStorage.getItem("token")}`

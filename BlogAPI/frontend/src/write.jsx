@@ -1,3 +1,4 @@
+const apiUrl = import.meta.env.VITE_BACKEND_API_URL;
 
 function WritePost () {
 
@@ -6,7 +7,7 @@ function WritePost () {
         const title = e.target.title.value;
         const content = e.target.content.value;
 
-        fetch('http://localhost:3001/post', {
+        fetch(`${apiUrl}/post`, {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -20,9 +21,10 @@ function WritePost () {
             }
             return response.json();
         }).then(data => {
-            console.log('Post created successfully:', data);
             alert('Post created successfully');
-            e.target.reset(); // Reset the form
+            //todo: Redirect to the user's posts page
+            window.location.href = `/post/user/${data.authorId}`; // Redirect to the user's posts page
+            
         }).catch(error => {
             console.error('Error creating post:', error);
             alert(error.message || 'Error creating post');

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+const apiUrl = import.meta.env.VITE_BACKEND_API_URL;
 
 function SignUp () {
     const [data, setData] = useState({
@@ -32,7 +33,7 @@ function SignUp () {
             return;
         };
         try {
-            const response = await fetch('http://localhost:3001/signup', {
+            const response = await fetch(`${apiUrl}/signup`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {

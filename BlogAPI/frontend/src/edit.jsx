@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import {useParams} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+const apiUrl = import.meta.env.VITE_BACKEND_API_URL;
 
 function Edit () {
     const { postId } = useParams(); // Get postId from URL parameters
@@ -12,7 +13,7 @@ function Edit () {
     const token = localStorage.getItem("token");
     
     useEffect(() => {
-        fetch(`http://localhost:3001/post/${postId}`, {
+        fetch(`${apiUrl}/post/${postId}`, {
         headers: { authorization: `Bearer ${token}` }
         })
         .then(response => response.json())
@@ -26,7 +27,7 @@ function Edit () {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch(`http://localhost:3001/post/${postId}`, {
+        fetch(`${apiUrl}/post/${postId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -36,7 +37,6 @@ function Edit () {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Post updated:', data);
             navigate(`/post/user/${data.post.authorId}`); // Redirect to the user's posts page
             // Optionally redirect or show a success message
         })

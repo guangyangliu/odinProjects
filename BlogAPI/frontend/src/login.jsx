@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+const apiUrl = import.meta.env.VITE_BACKEND_API_URL;
 
 function Login() {
     const navigate = useNavigate();
@@ -9,7 +10,7 @@ function Login() {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
-        const response = await fetch('http://localhost:3001/login', {
+        const response = await fetch(`${apiUrl}/login`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {

@@ -60,23 +60,6 @@ router.put('/:postId', findToken, async(req,res) => {
     
 });
 
-
-/*router.get('/user/:id', findToken, async(req,res) => {
-    jwt.verify(req.token, 'secretKey', async(err, authData) => {
-    if (err) {
-        return res.status(403).json({message: 'Forbidden: Invalid token'});
-    }
-    const id = parseInt(req.params.id, 10);
-    if(id !== authData.user.id) {
-        return res.status(403).json({message: 'Forbidden: You can only access your own posts'});
-    }
-    const post = await req.context.model.post.findMany({
-        where: {authorId: authData.user.id}
-    });
-    return res.json(post);
-    })}
-)*/
-
 router.get('/user/:id', authorization, async(req,res) => {
     const authData = req.authData; // Get authData from the request
     const id = parseInt(req.params.id, 10);
@@ -104,7 +87,7 @@ router.post('/', findToken, async(req, res) => {
                     authorId: authData.user.id
                 }
             });
-            return res.status(200).json({message: 'Post created!'});
+            return res.status(200).json({message: 'Post created!', authorId: authData.user.id});
         }
     })
     

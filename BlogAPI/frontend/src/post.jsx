@@ -1,9 +1,9 @@
 import { useState,useEffect} from "react";
-import { useRef } from "react";
+const apiUrl = import.meta.env.VITE_BACKEND_API_URL;
 function  Post (){
     const [posts, setPosts] = useState([]);
     useEffect(() => {
-        fetch("http://localhost:3001/post")
+        fetch(`${apiUrl}/post`)
           .then((response) => response.json())
           .then((response) => setPosts(response))
           .catch((error) => console.error(error));
@@ -19,9 +19,9 @@ function  Post (){
         e.preventDefault();
         const commentContent = e.target.comment.value;
         const postId = e.target.id; // Get the post ID from the form's id attribute
-        console.log(postId);
-        console.log(commentContent);
-       await fetch(`http://localhost:3001/comment/${postId}`, {
+        
+        
+       await fetch(`${apiUrl}/comment/${postId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,10 +36,11 @@ function  Post (){
                 response.json();
             }
         }).then(data => {
-            console.log('Comment added successfully:', data);
+            
             alert('Comment added successfully');
             e.target.reset(); // Reset the form
             setShowForm(false); // Hide the form after submission
+            window.location.reload(); // Reload the page to see the new comment
         })
         .catch(error => console.error('Error adding comment:', error));
      };

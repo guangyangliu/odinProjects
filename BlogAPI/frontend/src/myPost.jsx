@@ -1,12 +1,13 @@
 import { useState,useEffect} from "react";
 import { useParams } from "react-router-dom";
+const apiUrl = import.meta.env.VITE_BACKEND_API_URL;
 
 function  MyPost (){
     const {id} = useParams();
     const [posts, setPosts] = useState([]);
     const token = localStorage.getItem("token");
     useEffect(() => {
-        fetch(`http://localhost:3001/post/user/${id}`, {headers: {authorization: `Bearer ${token}`}})
+        fetch(`${apiUrl}/post/user/${id}`, {headers: {authorization: `Bearer ${token}`}})
           .then((response) => response.json())
           .then((response) => setPosts(response))
           .catch((error) => console.error(error));
